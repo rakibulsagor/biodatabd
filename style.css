@@ -228,11 +228,12 @@ body {
 
 /* The Document (A4 Ratio styling for PDF) */
 .biodata-document {
-    background: var(--bg-white);
+    background-color: #fff;
+    background-image: url('biodata page image/template-biodata.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
     width: 100%;
-    /* Approximate A4 ratio */
     min-height: 297mm;
-    /* Will scale down */
     max-width: 210mm;
     margin: 0 auto;
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -242,18 +243,14 @@ body {
 }
 
 .document-border {
-    border: 3px double var(--accent-gold);
-    border-radius: 4px;
+    border: none;
     min-height: 100%;
     position: relative;
     padding: 2.5rem;
 }
 
 .ornament {
-    position: absolute;
-    width: 150px;
-    left: 50%;
-    transform: translateX(-50%);
+    display: none;
 }
 
 .top-ornament {

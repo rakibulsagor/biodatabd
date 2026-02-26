@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
         personal: [
             { id: 'fullName', label: 'Name / নাম' },
             { id: 'gender', label: 'Gender / লিঙ্গ' },
+            { id: 'religion', label: 'Religion / ধর্ম' },
             { id: 'age', label: 'Age / বয়স' },
             { id: 'height', label: 'Height / উচ্চতা' },
             { id: 'bloodGroup', label: 'Blood Group / রক্ত' },
@@ -509,13 +510,32 @@ document.addEventListener('DOMContentLoaded', () => {
         return canvas.toDataURL('image/jpeg', 0.95);
     }
 
+    /** Render SVG element to a PNG base64 data-URL for embedding in PDF. */
+    function svgToBase64(svgEl, sizePx) {
+        return new Promise(resolve => {
+            const data = new XMLSerializer().serializeToString(svgEl);
+            const blob = new Blob([data], { type: 'image/svg+xml;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const img = new Image();
+            img.onload = () => {
+                const c = document.createElement('canvas');
+                c.width = c.height = sizePx;
+                c.getContext('2d').drawImage(img, 0, 0, sizePx, sizePx);
+                URL.revokeObjectURL(url);
+                resolve(c.toDataURL('image/png'));
+            };
+            img.onerror = () => resolve(null);
+            img.src = url;
+        });
+    }
+
     async function generateBioPDF() {
         const element = document.getElementById('biodata-document');
         const appContainer = document.querySelector('.app-container');
         const previewSec = document.querySelector('.preview-section');
         const stickyCont = document.querySelector('.sticky-container');
 
-        // Save originals
+        // ── Save originals ──
         const origCont = appContainer.getAttribute('style') || '';
         const origPrev = previewSec.getAttribute('style') || '';
         const origSticky = stickyCont.getAttribute('style') || '';
@@ -523,116 +543,112 @@ document.addEventListener('DOMContentLoaded', () => {
         const docBorder = element.querySelector('.document-border');
         const origBorder = docBorder ? (docBorder.getAttribute('style') || '') : '';
 
-        // Expand to A4 width with transparent background for clean overlay
+        // ── Expand layout to A4 width, transparent background ──
         const CAPTURE_W = 794;
         appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
         previewSec.style.cssText = 'width:100%;';
         stickyCont.style.cssText = 'position:static;';
         element.style.cssText = `width:${CAPTURE_W}px;max-width:${CAPTURE_W}px;margin:0 auto;`
-            + 'box-shadow:none;overflow:visible;min-height:unset;background:transparent;';
+            + 'box-shadow:none;overflow:visible;min-height:unset;'
+            + 'background:transparent!important;background-image:none!important;';
         if (docBorder) {
             docBorder.style.border = 'none';
             docBorder.style.background = 'transparent';
         }
-
-        // Wait for reflow
         await new Promise(r => setTimeout(r, 200));
 
-        // Collect section top Y positions (CSS px, relative to element top)
-        const elRect = element.getBoundingClientRect();
-        const sections = element.querySelectorAll('.bio-section:not(.hidden-section)');
-        const sectionTopsCss = [];
-        sections.forEach(sec => {
-            sectionTopsCss.push(sec.getBoundingClientRect().top - elRect.top);
-        });
+        // ── Section visibility helpers ──
+        const bioHeader = element.querySelector('.bio-header');
+        const ornaments = element.querySelectorAll('.ornament');
+        const watermarkEl = element.querySelector('.watermark');
+        const allSections = [...element.querySelectorAll('.bio-section')];
 
-        // Render element to canvas (transparent background)
-        const canvas = await html2canvas(element, {
-            scale: 2,
-            useCORS: true,
-            scrollY: 0,
-            backgroundColor: null
-        });
+        const page1Ids = ['section-personal', 'section-family'];
+        const page2Ids = ['section-education', 'section-family-members', 'section-contact'];
 
-        // Restore all styles
+        function showOnly(sectionIds, showHeader) {
+            if (bioHeader) bioHeader.style.display = showHeader ? '' : 'none';
+            if (watermarkEl) watermarkEl.style.display = 'none';
+            ornaments.forEach(o => o.style.display = 'none');
+            allSections.forEach(s => {
+                const keep = sectionIds.includes(s.id) && !s.classList.contains('hidden-section');
+                s.style.display = keep ? '' : 'none';
+            });
+        }
+
+        function restoreSections() {
+            if (bioHeader) bioHeader.style.display = '';
+            if (watermarkEl) watermarkEl.style.display = '';
+            ornaments.forEach(o => o.style.display = '');
+            allSections.forEach(s => s.style.display = '');
+        }
+
+        const captureOpts = { scale: 2, useCORS: true, scrollY: 0, backgroundColor: null };
+
+        // ── Capture Page 1: header + personal + family ──
+        showOnly(page1Ids, true);
+        await new Promise(r => setTimeout(r, 60));
+        const canvas1 = await html2canvas(element, captureOpts);
+
+        // ── Capture Page 2: education + extended family + contact ──
+        const visiblePage2 = page2Ids.filter(id => {
+            const s = document.getElementById(id);
+            return s && !s.classList.contains('hidden-section');
+        });
+        let canvas2 = null;
+        if (visiblePage2.length > 0) {
+            showOnly(page2Ids, false);
+            await new Promise(r => setTimeout(r, 60));
+            canvas2 = await html2canvas(element, captureOpts);
+        }
+
+        // ── Restore all styles ──
+        restoreSections();
         appContainer.setAttribute('style', origCont);
         previewSec.setAttribute('style', origPrev);
         stickyCont.setAttribute('style', origSticky);
         element.setAttribute('style', origEl);
         if (docBorder) docBorder.setAttribute('style', origBorder);
 
-        // Load template background image
+        // ── Load assets ──
         const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
+        const logoSvg = document.querySelector('.logo-wrapper svg');
+        const logoDataUrl = logoSvg ? await svgToBase64(logoSvg, 80) : null;
 
-        // PDF / layout constants (all in mm)
+        // ── PDF constants ──
         const A4_W = 210, A4_H = 297;
-        const MARGIN = 15;                         // inside template's ornamental border
-        const contentW = A4_W - 2 * MARGIN;         // 180 mm
-        const contentH = A4_H - 2 * MARGIN;         // 267 mm
+        const MARGIN = 15;
+        const contentW = A4_W - 2 * MARGIN;   // 180 mm
 
-        const canvasW = canvas.width;                // CAPTURE_W * 2
-        const mmPerPx = contentW / canvasW;          // mm per canvas-pixel
-        const pageH_px = contentH / mmPerPx;          // max canvas-pixels per page
-
-        // Convert CSS-px section tops → canvas-px (scale ×2)
-        const sectionTopsPx = sectionTopsCss.map(y => y * 2);
-
-        // Split canvas into pages – break ONLY between sections
-        const totalH = canvas.height;
-        const pages = [];
-        let sliceTop = 0;
-
-        while (sliceTop < totalH) {
-            const idealBottom = sliceTop + pageH_px;
-
-            if (idealBottom >= totalH) {
-                pages.push({ top: sliceTop, bottom: totalH });
-                break;
-            }
-
-            // Find the last section boundary that fits before idealBottom
-            let breakAt = idealBottom;
-            for (let i = sectionTopsPx.length - 1; i >= 0; i--) {
-                const sp = sectionTopsPx[i];
-                if (sp > sliceTop + 40 && sp <= idealBottom) {
-                    breakAt = sp;
-                    break;
-                }
-            }
-
-            pages.push({ top: sliceTop, bottom: breakAt });
-            sliceTop = breakAt;
-        }
-
-        // Build PDF using jsPDF
         const { jsPDF } = window.jspdf;
         const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
 
-        pages.forEach((page, idx) => {
-            if (idx > 0) pdf.addPage();
+        function addPageContent(canvas) {
+            const canvasW = canvas.width;
+            const mmPerPx = contentW / canvasW;
+            const contentH = (canvas.height * mmPerPx);
 
-            // Full-page template background on every page
+            // Template background
             pdf.addImage(templateDataUrl, 'JPEG', 0, 0, A4_W, A4_H);
 
-            // Slice the content canvas for this page
-            const sliceH_px = page.bottom - page.top;
-            const sliceCanvas = document.createElement('canvas');
-            sliceCanvas.width = canvasW;
-            sliceCanvas.height = sliceH_px;
-            sliceCanvas.getContext('2d').drawImage(
-                canvas,
-                0, page.top, canvasW, sliceH_px,
-                0, 0, canvasW, sliceH_px
-            );
+            // Biodata content
+            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', MARGIN, MARGIN, contentW, contentH);
 
-            // Place content slice on top of template
-            const sliceH_mm = sliceH_px * mmPerPx;
-            pdf.addImage(
-                sliceCanvas.toDataURL('image/png'),
-                'PNG',
-                MARGIN, MARGIN, contentW, sliceH_mm
-            );
-        });
+            // ── Watermark: logo + site URL ──
+            if (logoDataUrl) {
+                const logoMm = 7;
+                pdf.addImage(logoDataUrl, 'PNG', A4_W / 2 - logoMm / 2 - 22, A4_H - 13, logoMm, logoMm);
+            }
+            pdf.setFontSize(8);
+            pdf.setTextColor(100, 100, 100);
+            pdf.text('Created via biodatabd.vercel.app', A4_W / 2 + (logoDataUrl ? 2 : 0), A4_H - 9, { align: 'left' });
+        }
+
+        addPageContent(canvas1);
+        if (canvas2) {
+            pdf.addPage();
+            addPageContent(canvas2);
+        }
 
         pdf.save('Wedding_Biodata.pdf');
     }
