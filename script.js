@@ -114,11 +114,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Render dynamic education section
+    // Render dynamic education section as a specialized table
     function renderEducationSection() {
-        const table = document.getElementById('table-education');
-        if (!table) return;
-        table.innerHTML = '';
+        const tbody = document.getElementById('table-education-body');
+        if (!tbody) return;
+        tbody.innerHTML = '';
 
         let hasVisibleField = false;
         const items = document.querySelectorAll('.education-item');
@@ -130,20 +130,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (nameInput && streamInput && gpaInput && (nameInput.value.trim() !== '' || streamInput.value.trim() !== '' || gpaInput.value.trim() !== '')) {
                 hasVisibleField = true;
-                const label = nameInput.value.trim() || 'Qualification';
-
-                const parts = [];
-                if (streamInput.value.trim()) parts.push(streamInput.value.trim());
-                if (gpaInput.value.trim()) parts.push(gpaInput.value.trim());
-                const fullValue = parts.join(', ');
 
                 const tr = document.createElement('tr');
+                tr.style.borderBottom = '1px solid #eee';
                 tr.innerHTML = `
-                    <td>${label}</td>
-                    <td class="colon">:</td>
-                    <td class="val">${fullValue}</td>
+                    <td style="padding: 0.5rem; vertical-align: middle; color: var(--primary-dark); font-weight: 500;">${nameInput.value.trim() || '-'}</td>
+                    <td class="val" style="padding: 0.5rem; vertical-align: middle;">${streamInput.value.trim() || '-'}</td>
+                    <td class="val" style="padding: 0.5rem; vertical-align: middle; color: var(--text-main); font-weight: 500;">${gpaInput.value.trim() || '-'}</td>
                 `;
-                table.appendChild(tr);
+                tbody.appendChild(tr);
             }
         });
 

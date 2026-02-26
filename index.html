@@ -300,8 +300,21 @@
                             <!-- Education Section -->
                             <div class="bio-section" id="section-education">
                                 <h4 class="section-title">Education <span class="bn">শিক্ষাগত যোগ্যতা</span></h4>
-                                <table class="bio-table" id="table-education">
-                                    <!-- Dynamic rows inside -->
+                                <table class="bio-table education-grid-table" id="table-education"
+                                    style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+                                    <thead>
+                                        <tr style="border-bottom: 1px solid var(--accent-gold); text-align: left;">
+                                            <th style="padding: 0.5rem; color: var(--primary-dark); width: 35%;">Name of
+                                                Exam</th>
+                                            <th style="padding: 0.5rem; color: var(--primary-dark); width: 40%;">Group /
+                                                Subject</th>
+                                            <th style="padding: 0.5rem; color: var(--primary-dark); width: 25%;">Result
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table-education-body">
+                                        <!-- Dynamic rows inside -->
+                                    </tbody>
                                 </table>
                             </div>
 
