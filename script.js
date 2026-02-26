@@ -496,10 +496,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const element = document.getElementById('biodata-document');
 
         const opt = {
-            margin: 0,
+            margin: [1, 1, 1, 1],
             filename: 'Wedding_Biodata.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true },
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
