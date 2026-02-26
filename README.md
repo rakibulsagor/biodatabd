@@ -1,5 +1,18 @@
-<div align="center">
-  <img src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
+![original-image(1)](https://github.com/user-attachments/assets/cb4cb7ab-0c84-4b5a-b861-58ec76631de2)<div align="center">
+  <img align src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
+  <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="100" cy="100" r="85" stroke="#2D89C7" stroke-width="4"/>
+  <circle cx="100" cy="100" r="75" stroke="#8DC63F" stroke-width="4"/>
+  
+  <circle cx="90" cy="85" r="18" fill="#8DC63F"/>
+  <circle cx="120" cy="95" r="14" fill="#2D89C7"/>
+  
+  <path d="M50 140C50 110 90 105 100 125C110 105 150 110 150 140" stroke="#8DC63F" stroke-width="6" stroke-linecap="round"/>
+  
+  <path d="M90 65C90 55 100 50 105 55C105 60 100 65 95 65" fill="#8DC63F"/>
+  <path d="M90 65C85 60 85 50 95 50" fill="#8DC63F"/>
+</svg>
+
 </div>
 
 <h1 align="center">Biodata BD</h1>
