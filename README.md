@@ -1,5 +1,7 @@
 
-<img width="200" height="200" alt="converted-image(1)" src="https://github.com/user-attachments/assets/caf139aa-8221-4e72-9dca-e2595147fe24" />
+<div align="center">
+  <img width="200" height="200" alt="converted-image(1)" src="https://github.com/user-attachments/assets/caf139aa-8221-4e72-9dca-e2595147fe24" />
+</div>
 <h1 align="center">Biodata BD</h1>
 <p align="center">
   <strong>A beautifully crafted, fully client-side HTML/CSS/JS web application for generating premium Shahi Islamic & Bengali Wedding Biodatas.</strong><br>
