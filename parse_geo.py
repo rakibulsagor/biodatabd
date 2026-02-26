@@ -1,53 +1,28 @@
 import json
 
-with open("bd-geo-info-main/src/data/bd-districts.json") as f:
-    d = json.load(f)["districts"]
-with open("bd-geo-info-main/src/data/bd-upazilas.json") as f:
-    u = json.load(f)["upazilas"]
-with open("bd-geo-info-main/src/data/bd-postcodes.json") as f:
-    p = json.load(f)["postcodes"]
-with open("bd-geo-info-main/src/data/unions.json") as f:
-    raw_unions = json.load(f)
+with open("bangladesh-address/src/json/bd-upazila.json", encoding="utf-8") as f:
+    upazilas = json.load(f)
 
-un = []
-for item in raw_unions:
-    if item.get("type") == "table" and item.get("name") == "unions":
-        un = item.get("data", [])
-        break
+# Build district -> upazilas map
+district_map = {}
+for item in upazilas:
+    dist = item["district"]
+    up = item["upazila"]
+    if dist not in district_map:
+        district_map[dist] = []
+    district_map[dist].append(up)
 
-# Arrays for simpler looping in JS
-zilla_list = [{"id": x["id"], "name": f'{x["name"]} / {x["bn_name"]}'} for x in d]
+# Sorted unique districts
+districts = sorted(district_map.keys())
 
-upazila_map = {}
-for x in u:
-    dist_id = x["district_id"]
-    if dist_id not in upazila_map:
-        upazila_map[dist_id] = []
-    upazila_map[dist_id].append({
-        "id": x["id"],
-        "name": f'{x["name"]} / {x["bn_name"]}'
-    })
+js = f"""// Auto-generated Geo Data from bangladesh-address dataset
+// District -> Upazilas mapping for cascading dropdowns
 
-postcode_map = {}
-for x in p:
-    dist_id = x.get("district_id", "")
-    if dist_id not in postcode_map:
-        postcode_map[dist_id] = []
-    postcode_map[dist_id].append(f'{x["postCode"]} - {x["postOffice"]}')
+const geoDistricts = {json.dumps(districts, ensure_ascii=False)};
 
-union_map = {}
-for x in un:
-    up_id = x["upazilla_id"]
-    if up_id not in union_map:
-        union_map[up_id] = []
-    union_map[up_id].append(f'{x["name"]} / {x["bn_name"]}')
-
-js_content = f"""// Generated Geo Data for BiodataBD
-const geoZillas = {json.dumps(zilla_list, ensure_ascii=False)};
-const geoUpazilas = {json.dumps(upazila_map, ensure_ascii=False)};
-const geoPostcodes = {json.dumps(postcode_map, ensure_ascii=False)};
-const geoUnions = {json.dumps(union_map, ensure_ascii=False)};
+const geoUpazilasByDistrict = {json.dumps(district_map, ensure_ascii=False)};
 """
 
 with open("geo-data.js", "w", encoding="utf-8") as f:
-    f.write(js_content)
+    f.write(js)
+print("Done! geo-data.js generated.")

@@ -280,10 +280,8 @@
                             </select>
                         </div>
                         <div class="input-field">
-                            <label for="presentUnion">Village/Union / গ্রাম/ইউনিয়ন</label>
-                            <select id="presentUnion" disabled>
-                                <option value="">Select Village/Union</option>
-                            </select>
+                            <label for="presentVillage">Village / গ্রাম</label>
+                            <input type="text" id="presentVillage" placeholder="e.g. Mirpur, Dhanmondi">
                         </div>
                         <div class="input-field">
                             <label for="presentPostcode">Postal Code / পোস্টাল কোড</label>
@@ -496,7 +494,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <!-- Cropper.js Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
-    <!-- Wait for Geo places to load first -->
+    <!-- Geo Data (districts / upazilas) -->
+    <script src="geo-data.js"></script>
     <script src="script.js"></script>
 </body>
 

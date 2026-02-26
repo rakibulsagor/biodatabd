@@ -72,16 +72,63 @@ document.addEventListener('DOMContentLoaded', () => {
         heightIn.addEventListener('change', updateHeightHidden);
     }
 
-    // Load Address Suggestions into Datalist from geo-data.js
-    const addressDataList = document.getElementById('address-suggestions');
-    if (addressDataList && typeof geoPlaces !== 'undefined') {
-        const fragment = document.createDocumentFragment();
-        geoPlaces.forEach(place => {
-            const option = document.createElement('option');
-            option.value = place;
-            fragment.appendChild(option);
+    // Numeric-only input restriction
+    document.querySelectorAll('.num-only').forEach(input => {
+        input.addEventListener('input', function () {
+            this.value = this.value.replace(/[^0-9]/g, '');
         });
-        addressDataList.appendChild(fragment);
+    });
+
+    // --- Cascading Address Dropdowns (District -> Upazila) ---
+    const zillaSelect = document.getElementById('presentZilla');
+    const upazilaSelect = document.getElementById('presentUpazila');
+    const addressHidden = document.getElementById('presentAddress');
+
+    function updateAddressHidden() {
+        const parts = [];
+        const village = document.getElementById('presentVillage');
+        if (village && village.value) parts.push(village.value);
+        if (upazilaSelect && upazilaSelect.value) parts.push(upazilaSelect.value);
+        if (zillaSelect && zillaSelect.value) parts.push(zillaSelect.value);
+        parts.push('Bangladesh');
+        if (addressHidden) {
+            addressHidden.value = parts.join(', ');
+            addressHidden.dispatchEvent(new Event('input'));
+        }
+    }
+
+    // Also update address when village typed
+    const villageInput = document.getElementById('presentVillage');
+    if (villageInput) villageInput.addEventListener('input', updateAddressHidden);
+
+    if (zillaSelect && typeof geoDistricts !== 'undefined') {
+        // Populate districts
+        geoDistricts.forEach(dist => {
+            const opt = document.createElement('option');
+            opt.value = dist;
+            opt.textContent = dist;
+            zillaSelect.appendChild(opt);
+        });
+
+        zillaSelect.addEventListener('change', function () {
+            const selectedDist = this.value;
+            // Reset upazila
+            upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+            upazilaSelect.disabled = true;
+
+            if (selectedDist && geoUpazilasByDistrict[selectedDist]) {
+                geoUpazilasByDistrict[selectedDist].forEach(up => {
+                    const opt = document.createElement('option');
+                    opt.value = up;
+                    opt.textContent = up;
+                    upazilaSelect.appendChild(opt);
+                });
+                upazilaSelect.disabled = false;
+            }
+            updateAddressHidden();
+        });
+
+        upazilaSelect.addEventListener('change', updateAddressHidden);
     }
 
     // Religion Logo Logic
