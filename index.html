@@ -353,7 +353,7 @@
                 share your experience with Biodata BD? Send us a message below!</p>
 
             <!-- We will use Web3Forms to send emails straight to your inbox -->
-            <form action="https://api.web3forms.com/submit" method="POST" class="feedback-form">
+            <form action="https://api.web3forms.com/submit" method="POST" class="feedback-form" id="web3-feedback-form">
                 <!-- Replace with your Access Key from Web3Forms -->
                 <input type="hidden" name="access_key" value="91f1c385-85ac-4397-beef-f15b721ac8cd">
 
@@ -375,13 +375,35 @@
                     <div class="input-field span-full" style="align-items: center;">
                         <button type="submit" class="primary-btn" style="width: 200px;">Send Feedback</button>
                     </div>
+                    <div id="feedback-form-message" class="span-full"
+                        style="text-align: center; color: var(--primary-maroon); font-weight: 500; display: none;">
+                    </div>
                 </div>
             </form>
         </div>
     </section>
 
+    <!-- Owner Details Section -->
+    <section class="owner-details-section"
+        style="background-color: var(--primary-dark); color: #fff; padding: 4rem 1rem;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h3
+                style="font-family: var(--font-serif); font-size: 1.8rem; margin-bottom: 0.5rem; color: var(--accent-gold);">
+                Developer Details</h3>
+            <p style="margin-bottom: 1.5rem; color: #ddd;">Created and maintained with love.</p>
+            <div style="display: flex; justify-content: center; gap: 1.5rem;">
+                <a href="https://linkedin.com/" target="_blank"
+                    style="color: var(--accent-gold); text-decoration: none; font-size: 1.1rem;">LinkedIn</a>
+                <a href="https://github.com/rakibulsagor" target="_blank"
+                    style="color: var(--accent-gold); text-decoration: none; font-size: 1.1rem;">GitHub</a>
+                <a href="https://x.com/" target="_blank"
+                    style="color: var(--accent-gold); text-decoration: none; font-size: 1.1rem;">X (Twitter)</a>
+            </div>
+        </div>
+    </section>
+
     <footer
-        style="text-align: center; padding: 2rem; background: var(--primary-dark); color: #fff; font-family: var(--font-sans); margin-top: 2rem;">
+        style="text-align: center; padding: 1.5rem; background: #2a0307; color: #fff; font-family: var(--font-sans);">
         <p>&copy; 2026 <a href="https://biodatabd.vercel.app" target="_blank"
                 style="color: var(--accent-gold); text-decoration: none;">Biodata BD</a>. All rights reserved.</p>
     </footer>

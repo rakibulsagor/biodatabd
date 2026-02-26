@@ -408,4 +408,59 @@ document.addEventListener('DOMContentLoaded', () => {
             element.classList.remove('generating-pdf');
         });
     });
+
+    // Feedback Form Submission Limiter via LocalStorage
+    const feedbackForm = document.getElementById('web3-feedback-form');
+    if (feedbackForm) {
+        feedbackForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const messageEl = document.getElementById('feedback-form-message');
+            const today = new Date().toLocaleDateString();
+
+            // Get local storage tracking object
+            let feedbackTracking = JSON.parse(localStorage.getItem('biodataFeedbackTracking')) || {};
+
+            // Check if this is a new day, clear tracking if so
+            if (feedbackTracking.date !== today) {
+                feedbackTracking = { date: today, count: 0 };
+            }
+
+            // Limit to 3 per day
+            if (feedbackTracking.count >= 3) {
+                messageEl.textContent = 'You have reached the maximum of 3 feedbacks per day. Please try again tomorrow!';
+                messageEl.style.display = 'block';
+                return;
+            }
+
+            // Allow Submission, but hijacking the submit to do it via fetch instead of redirect
+            messageEl.textContent = 'Sending...';
+            messageEl.style.color = '#333';
+            messageEl.style.display = 'block';
+
+            const formData = new FormData(feedbackForm);
+
+            fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    messageEl.textContent = 'Thank you for your feedback! It was sent successfully.';
+                    messageEl.style.color = 'green';
+
+                    // Increment and save tracking limit
+                    feedbackTracking.count++;
+                    localStorage.setItem('biodataFeedbackTracking', JSON.stringify(feedbackTracking));
+
+                    feedbackForm.reset();
+                } else {
+                    messageEl.textContent = 'Something went wrong, please try again.';
+                    messageEl.style.color = 'red';
+                }
+            }).catch(err => {
+                messageEl.textContent = 'Network error. Please try again later.';
+                messageEl.style.color = 'red';
+            });
+        });
+    }
 });
