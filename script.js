@@ -68,8 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
         religionSelect.addEventListener('change', function () {
             const val = this.value;
             if (val === 'Islam') {
-                religionLogo.src = 'biodata page image/islam/vecteezy_mordern-islamic-logo-illustration-black-and-white_.jpg';
-                religionLogo.style.display = 'inline-block';
+                religionLogo.style.display = 'none';
                 if (bismillahText) bismillahText.style.display = 'block';
             } else if (val === 'Hindu') {
                 religionLogo.src = 'biodata page image/hindu/vecteezy_flower-mandala-with-om-hindu-symbol_12742089.jpg';
