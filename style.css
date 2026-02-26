@@ -208,10 +208,6 @@ body {
     transition: border-color 0.3s;
 }
 
-.input-field input[type="email"] {
-    font-family: var(--font-sans) !important;
-}
-
 .input-field input:focus,
 .input-field select:focus {
     outline: none;
