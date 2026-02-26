@@ -7,7 +7,13 @@ with open("bd-geo-info-main/src/data/bd-upazilas.json") as f:
 with open("bd-geo-info-main/src/data/bd-postcodes.json") as f:
     p = json.load(f)["postcodes"]
 with open("bd-geo-info-main/src/data/unions.json") as f:
-    un = json.load(f)
+    raw_unions = json.load(f)
+
+un = []
+for item in raw_unions:
+    if item.get("type") == "table" and item.get("name") == "unions":
+        un = item.get("data", [])
+        break
 
 # Arrays for simpler looping in JS
 zilla_list = [{"id": x["id"], "name": f'{x["name"]} / {x["bn_name"]}'} for x in d]
