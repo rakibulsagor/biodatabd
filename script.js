@@ -237,6 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const cropperImage = document.getElementById('cropper-image');
     const cropCancelBtn = document.getElementById('crop-cancel-btn');
     const cropApplyBtn = document.getElementById('crop-apply-btn');
+    const zoomInBtn = document.getElementById('zoom-in-btn');
+    const zoomOutBtn = document.getElementById('zoom-out-btn');
     let cropper;
 
     photoUpload.addEventListener('change', function (e) {
@@ -275,6 +277,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         photoUpload.value = ''; // Clean input
     });
+
+    // Zoom Controls
+    if (zoomInBtn) {
+        zoomInBtn.addEventListener('click', () => {
+            if (cropper) cropper.zoom(0.1);
+        });
+    }
+
+    if (zoomOutBtn) {
+        zoomOutBtn.addEventListener('click', () => {
+            if (cropper) cropper.zoom(-0.1);
+        });
+    }
 
     // Apply Crop
     cropApplyBtn.addEventListener('click', () => {
