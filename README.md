@@ -1,5 +1,5 @@
 <div align="center">
-  <img align="center" src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
+  <img src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="100" cy="100" r="85" stroke="#2D89C7" stroke-width="4"/>
   <circle cx="100" cy="100" r="75" stroke="#8DC63F" stroke-width="4"/>
