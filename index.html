@@ -344,6 +344,42 @@
         </section>
     </main>
 
+    <!-- Contact & Feedback Section -->
+    <section class="contact-feedback-section">
+        <div class="contact-container">
+            <h2 class="form-group-title" style="border:none; text-align: center; font-size: 2rem;">Contact Us & Feedback
+            </h2>
+            <p style="text-align: center; color: var(--text-muted); margin-bottom: 2rem;">Have a question or want to
+                share your experience with Biodata BD? Send us a message below!</p>
+
+            <!-- We will use Web3Forms to send emails straight to your inbox -->
+            <form action="https://api.web3forms.com/submit" method="POST" class="feedback-form">
+                <!-- Replace with your Access Key from Web3Forms -->
+                <input type="hidden" name="access_key" value="YOUR_ACCESS_KEY_HERE">
+
+                <div class="input-grid">
+                    <div class="input-field">
+                        <label>Your Name</label>
+                        <input type="text" name="name" required placeholder="John Doe">
+                    </div>
+                    <div class="input-field">
+                        <label>Your Email (Optional)</label>
+                        <input type="email" name="email" placeholder="john@example.com">
+                    </div>
+                    <div class="input-field span-full">
+                        <label>Message / Feedback</label>
+                        <textarea name="message" rows="5" required
+                            placeholder="Write your message or tell us what we should improve..."
+                            style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-family: var(--font-bangla), var(--font-sans);"></textarea>
+                    </div>
+                    <div class="input-field span-full" style="align-items: center;">
+                        <button type="submit" class="primary-btn" style="width: 200px;">Send Feedback</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <footer
         style="text-align: center; padding: 2rem; background: var(--primary-dark); color: #fff; font-family: var(--font-sans); margin-top: 2rem;">
         <p>&copy; 2026 <a href="https://biodatabd.vercel.app" target="_blank"
