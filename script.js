@@ -485,20 +485,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ─── PDF Generation ─────────────────────────────────────────────────────
 
-    /** Load a local image and return it as a base64 data-URL. */
-    function imageToBase64(src) {
-        return new Promise((resolve, reject) => {
-            const img = new Image();
-            img.onload = () => {
-                const c = document.createElement('canvas');
-                c.width = img.naturalWidth;
-                c.height = img.naturalHeight;
-                c.getContext('2d').drawImage(img, 0, 0);
-                resolve(c.toDataURL('image/jpeg', 0.95));
-            };
-            img.onerror = reject;
-            img.src = src;
-        });
+    /**
+     * Render page 1 of a local PDF file to a base64 JPEG data-URL using PDF.js.
+     * Scale = 3 ensures the template renders at high enough resolution for A4 print.
+     */
+    async function pdfPageToBase64(src) {
+        // Set the PDF.js worker (must match the lib version)
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
+        const loadingTask = pdfjsLib.getDocument(src);
+        const pdfDoc = await loadingTask.promise;
+        const page = await pdfDoc.getPage(1);
+
+        const SCALE = 3;  // higher = sharper background
+        const viewport = page.getViewport({ scale: SCALE });
+
+        const canvas = document.createElement('canvas');
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+        return canvas.toDataURL('image/jpeg', 0.95);
     }
 
     async function generateBioPDF() {
@@ -554,7 +562,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (docBorder) docBorder.setAttribute('style', origBorder);
 
         // Load template background image
-        const templateDataUrl = await imageToBase64('biodata page image/template');
+        const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
 
         // PDF / layout constants (all in mm)
         const A4_W = 210, A4_H = 297;
