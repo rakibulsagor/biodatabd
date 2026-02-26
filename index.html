@@ -41,7 +41,7 @@
             </svg>
         </div>
         <h1>বায়োডাটা বিডি (Biodata BD)</h1>
-        <p>Create your elegant wedding biodata instantly in English or Bangla</p>
+        <p>Create your elegant wedding biodata instantly in English and Bangla</p>
     </header>
 
     <main class="app-container">
@@ -52,82 +52,53 @@
                 <button id="download-btn-top" class="primary-btn">Download PDF</button>
             </div>
 
-
-        <div style="text-align: center; margin-bottom: 2rem;">
-            <a href="index.html" class="primary-btn" style="text-decoration: none; padding: 0.5rem 2rem; border-radius: 20px 0 0 20px;">English</a>
-            <a href="bangla.html" class="secondary-btn" style="text-decoration: none; padding: 0.5rem 2rem; border-radius: 0 20px 20px 0; background: #fff;">বাংলা</a>
-        </div>
             <form id="biodata-form">
                 <!-- Photo Upload -->
-                <div class="form-group-title">Photo</div>
+                <div class="form-group-title">Photo (ছবি)</div>
                 <div class="input-grid">
                     <div class="input-field span-full">
-                        <label for="photoUpload">Upload Photo</label>
+                        <label for="photoUpload">Upload Photo / ছবি আপলোড করুন</label>
                         <input type="file" id="photoUpload" accept="image/*">
                     </div>
                 </div>
 
                 <!-- Personal Details -->
-                <div class="form-group-title">Personal Details</div>
+                <div class="form-group-title">Personal Details (ব্যক্তিগত তথ্য)</div>
                 <div class="input-grid">
                     <div class="input-field">
-                        <label for="fullName">Full Name</label>
-                        <input type="text" id="fullName" placeholder="E.g. Kazi Tariq" class="alpha-only">
+                        <label for="fullName">Full Name / পুরা নাম</label>
+                        <input type="text" id="fullName" placeholder="E.g. Kazi Tariq / কাজী তারিক" class="alpha-only">
                     </div>
                     <div class="input-field">
-                        <label for="gender">Gender*</label>
+                        <label for="gender">Gender / লিঙ্গ *</label>
                         <select id="gender" required>
-                            <option value="">Select</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Male">Male / পুরুষ</option>
+                            <option value="Female">Female / মহিলা</option>
                         </select>
                     </div>
                     <div class="input-field">
-                        <label for="religion">Religion</label>
+                        <label for="religion">Religion / ধর্ম</label>
                         <select id="religion">
-                            <option value="">Select</option>
-                            <option value="Islam">Islam</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Christian">Christian</option>
-                            <option value="Other">Other</option>
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Islam">Islam / ইসলাম ধর্ম</option>
+                            <option value="Hindu">Hindu / হিন্দু ধর্ম</option>
+                            <option value="Christian">Christian / খ্রিস্টান ধর্ম</option>
+                            <option value="Other">Other / অন্যান্য</option>
                         </select>
                     </div>
                     <div class="input-field">
-                        <label for="age">Age</label>
+                        <label for="age">Age / বয়স</label>
                         <input type="text" id="age" placeholder="26">
                     </div>
-                    <div class="input-field height-group">
-                        <label>Height</label>
-                        <input type="hidden" id="height" value="">
-                        <div style="display: flex; gap: 0.5rem;">
-                            <select id="height-ft" style="width: 50%;">
-                                <option value="">Feet</option>
-                                <option value="4'">4'</option>
-                                <option value="5'">5'</option>
-                                <option value="6'">6'</option>
-                                <option value="7'">7'</option>
-                            </select>
-                            <select id="height-in" style="width: 50%;">
-                                <option value="">Inches</option>
-                                <option value="0&quot;">0"</option>
-                                <option value="1&quot;">1"</option>
-                                <option value="2&quot;">2"</option>
-                                <option value="3&quot;">3"</option>
-                                <option value="4&quot;">4"</option>
-                                <option value="5&quot;">5"</option>
-                                <option value="6&quot;">6"</option>
-                                <option value="7&quot;">7"</option>
-                                <option value="8&quot;">8"</option>
-                                <option value="9&quot;">9"</option>
-                                <option value="10&quot;">10"</option>
-                                <option value="11&quot;">11"</option>
-                            </select>
-                        </div>
+                    <div class="input-field">
+                        <label for="height">Height / উচ্চতা</label>
+                        <input type="text" id="height" placeholder="5'8&quot;">
                     </div>
                     <div class="input-field">
-                        <label for="bloodGroup">Blood Group</label>
+                        <label for="bloodGroup">Blood Group / রক্তের গ্রুপ</label>
                         <select id="bloodGroup">
-                            <option value="">Select</option>
+                            <option value="">Select / নির্বাচন করুন</option>
                             <option value="A+">A+</option>
                             <option value="A-">A-</option>
                             <option value="B+">B+</option>
@@ -139,69 +110,69 @@
                         </select>
                     </div>
                     <div class="input-field">
-                        <label for="maritalStatus">Marital Status</label>
+                        <label for="maritalStatus">Marital Status / বৈবাহিক অবস্থা</label>
                         <select id="maritalStatus">
-                            <option value="">Select</option>
-                            <option value="Unmarried">Unmarried</option>
-                            <option value="Widowed">Widowed</option>
-                            <option value="Divorced">Divorced</option>
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Unmarried / অবিবাহিত">Unmarried / অবিবাহিত</option>
+                            <option value="Widowed / বিধবা / বিপত্নীক">Widowed / বিধবা / বিপত্নীক</option>
+                            <option value="Divorced / তালাকপ্রাপ্ত">Divorced / তালাকপ্রাপ্ত</option>
                         </select>
                     </div>
                     <div class="input-field">
-                        <label for="job">Occupation</label>
+                        <label for="job">Occupation / পেশা</label>
                         <input type="text" id="job" list="job-suggestions" placeholder="E.g. Software Engineer">
                         <datalist id="job-suggestions">
-                            <option value="Software Engineer">
-                            <option value="Doctor">
-                            <option value="Teacher">
-                            <option value="Businessman">
-                            <option value="Govt Employee">
-                            <option value="Private Job">
-                            <option value="Student">
+                            <option value="Software Engineer / সফটওয়্যার ইঞ্জিনিয়ার">
+                            <option value="Doctor / ডাক্তার">
+                            <option value="Teacher / শিক্ষক">
+                            <option value="Businessman / ব্যবসায়ী">
+                            <option value="Govt Employee / সরকারি চাকরিজীবী">
+                            <option value="Private Job / বেসরকারি চাকরি">
+                            <option value="Student / ছাত্র">
                         </datalist>
                     </div>
                     <div class="input-field">
-                        <label for="salary">Monthly Income</label>
+                        <label for="salary">Monthly Income / মাসিক আয়</label>
                         <input type="text" id="salary" class="income-input" placeholder="E.g. 50000">
                     </div>
                 </div>
 
                 <!-- Family Details -->
-                <div class="form-group-title">Family Details</div>
+                <div class="form-group-title">Family Details (পারিবারিক তথ্য)</div>
                 <div class="input-grid">
                     <div class="input-field">
-                        <label for="fatherName">Father's Name</label>
+                        <label for="fatherName">Father's Name / পিতার নাম</label>
                         <input type="text" id="fatherName" class="alpha-only" placeholder="">
                     </div>
                     <div class="input-field">
-                        <label for="fatherWork">Father's Work</label>
+                        <label for="fatherWork">Father's Work / পিতার পেশা</label>
                         <input type="text" id="fatherWork" list="parent-work-suggestions"
-                            placeholder="BusinessmanRetired">
+                            placeholder="Businessman / Retired">
                         <datalist id="parent-work-suggestions">
-                            <option value="Businessman">
-                            <option value="Govt Employee">
-                            <option value="Private Job">
-                            <option value="Farmer">
-                            <option value="Teacher">
-                            <option value="Retired">
-                            <option value="Homemaker">
-                            <option value="Deceased">
+                            <option value="Businessman / ব্যবসায়ী">
+                            <option value="Govt Employee / সরকারি কর্মকর্তা">
+                            <option value="Private Job / বেসরকারি চাকরি">
+                            <option value="Farmer / কৃষক">
+                            <option value="Teacher / শিক্ষক">
+                            <option value="Retired / অবসরপ্রাপ্ত">
+                            <option value="Homemaker / গৃহিণী">
+                            <option value="Deceased / মৃত">
                         </datalist>
                     </div>
                     <div class="input-field">
-                        <label for="motherName">Mother's Name</label>
+                        <label for="motherName">Mother's Name / মাতার নাম</label>
                         <input type="text" id="motherName" class="alpha-only" placeholder="">
                     </div>
                     <div class="input-field">
-                        <label for="motherWork">Mother's Work</label>
+                        <label for="motherWork">Mother's Work / মাতার পেশা</label>
                         <input type="text" id="motherWork" list="parent-work-suggestions" placeholder="Homemaker">
                     </div>
                     <div class="input-field">
-                        <label for="parentsIncome">Parents' Monthly Income-মাতার মাসিক আয়</label>
+                        <label for="parentsIncome">Parents' Monthly Income / পিতা-মাতার মাসিক আয়</label>
                         <input type="text" id="parentsIncome" class="income-input" placeholder="E.g. 100000">
                     </div>
                     <div class="input-field">
-                        <label for="familyMembers">Total Members</label>
+                        <label for="familyMembers">Total Members / পরিবারের সদস্য সংখ্যা</label>
                         <input type="text" id="familyMembers" placeholder="5">
                     </div>
                 </div>
@@ -213,24 +184,24 @@
                     Brother/Sister/Grandparent</button>
 
                 <!-- Education Details -->
-                <div class="form-group-title">Education</div>
+                <div class="form-group-title">Education (শিক্ষাগত যোগ্যতা)</div>
                 <!-- Dynamic Education Container -->
                 <div id="education-container">
                     <div class="input-grid education-item">
                         <div class="input-field">
-                            <label>Qualification Name (E.g. S.S.C)</label>
+                            <label>Qualification Name (E.g. S.S.C / সমমান)</label>
                             <input type="text" class="dyn-edu-name" placeholder="S.S.C"
                                 oninput="this.nextElementSibling.setAttribute('data-edu-label', this.value)"
                                 list="edu-name-suggestions">
                             <input type="hidden" class="dyn-edu-label-temp" data-edu-label="S.S.C">
                         </div>
                         <div class="input-field">
-                            <label>GroupSubject (E.g. Science)</label>
+                            <label>Group / Subject (E.g. Science / বিজ্ঞান)</label>
                             <input type="text" class="dyn-edu-stream" placeholder="Science"
                                 list="edu-stream-suggestions">
                         </div>
                         <div class="input-field span-full">
-                            <label>ResultGrade (E.g. GPA 5.00)</label>
+                            <label>Result / Grade (E.g. GPA 5.00)</label>
                             <input type="text" class="dyn-edu-gpa" placeholder="GPA 5.00">
                         </div>
                     </div>
@@ -252,30 +223,30 @@
                     <option value="Diploma">
                 </datalist>
                 <datalist id="edu-stream-suggestions">
-                    <option value="Science">
-                    <option value="Arts">
-                    <option value="Commerce">
+                    <option value="Science / বিজ্ঞান">
+                    <option value="Arts / মানবিক">
+                    <option value="Commerce / ব্যবসায় শিক্ষা">
                     <option value="CSE">
                     <option value="EEE">
                     <option value="Civil">
                 </datalist>
 
-                <!-- RegionalGrandparents Details -->
-                <div class="form-group-title">Address & Grandparents</div>
+                <!-- Regional / Grandparents Details -->
+                <div class="form-group-title">Address & Grandparents (ঠিকানা ও বংশ)</div>
                 <div id="grandparents-container">
                     <div class="input-grid gp-item">
                         <div class="input-field span-full">
-                            <label for="presentAddress">Present Address</label>
+                            <label for="presentAddress">Present Address / বর্তমান ঠিকানা</label>
                             <input type="text" id="presentAddress" placeholder="Gulshan, Dhaka">
                         </div>
                         <div class="input-field">
-                            <label>Dadar Bari (Paternal)</label>
-                            <input type="text" class="dyn-gp-input" data-gp-label="Dadar Bari"
+                            <label>Dadar Bari (Paternal) / দাদার বাড়ি</label>
+                            <input type="text" class="dyn-gp-input" data-gp-label="Dadar Bari / দাদার বাড়ি"
                                 placeholder="Comilla">
                         </div>
                         <div class="input-field">
-                            <label>Nanar Bari (Maternal)</label>
-                            <input type="text" class="dyn-gp-input" data-gp-label="Nanar Bari"
+                            <label>Nanar Bari (Maternal) / নানার বাড়ি</label>
+                            <input type="text" class="dyn-gp-input" data-gp-label="Nanar Bari / নানার বাড়ি"
                                 placeholder="Noakhali">
                         </div>
                     </div>
@@ -290,7 +261,7 @@
             <div class="sticky-container">
                 <div id="biodata-document" class="biodata-document">
                     <div class="document-border">
-                        <!-- FloralOrnamental Top -->
+                        <!-- Floral / Ornamental Top -->
                         <div class="ornament top-ornament">
                             <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M50 0 C40 10 30 20 0 20 L100 20 C70 20 60 10 50 0 Z" fill="#D4AF37" />
@@ -336,7 +307,8 @@
                                         <tr style="border-bottom: 1px solid var(--accent-gold); text-align: left;">
                                             <th style="padding: 0.5rem; color: var(--primary-dark); width: 35%;">Name of
                                                 Exam</th>
-                                            <th style="padding: 0.5rem; color: var(--primary-dark); width: 40%;">GroupSubject</th>
+                                            <th style="padding: 0.5rem; color: var(--primary-dark); width: 40%;">Group /
+                                                Subject</th>
                                             <th style="padding: 0.5rem; color: var(--primary-dark); width: 25%;">Result
                                             </th>
                                         </tr>
@@ -367,7 +339,7 @@
 
                         </div>
 
-                        <!-- FloralOrnamental Bottom -->
+                        <!-- Floral / Ornamental Bottom -->
                         <div class="ornament bottom-ornament">
                             <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg"
                                 style="transform: rotate(180deg);">
@@ -409,7 +381,7 @@
                         <input type="email" name="email" placeholder="john@example.com">
                     </div>
                     <div class="input-field span-full">
-                        <label>MessageFeedback</label>
+                        <label>Message / Feedback</label>
                         <textarea name="message" rows="5" required
                             placeholder="Write your message or tell us what we should improve..."
                             style="padding: 0.8rem; border: 1px solid #ddd; border-radius: 6px; font-family: var(--font-bangla), var(--font-sans);"></textarea>

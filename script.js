@@ -1,45 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    /Define the schema for sections
+    // Define the schema for sections
     const schema = {
         personal: [
-            { id: 'fullName', label: 'Name' },
-            { id: 'gender', label: 'Gender' },
-            { id: 'age', label: 'Age' },
-            { id: 'height', label: 'Height' },
-            { id: 'bloodGroup', label: 'Blood Group' },
-            { id: 'job', label: 'Occupation' },
-            { id: 'salary', label: 'Income' },
-            { id: 'maritalStatus', label: 'Marital Status' }
+            { id: 'fullName', label: 'Name / নাম' },
+            { id: 'gender', label: 'Gender / লিঙ্গ' },
+            { id: 'age', label: 'Age / বয়স' },
+            { id: 'height', label: 'Height / উচ্চতা' },
+            { id: 'bloodGroup', label: 'Blood Group / রক্ত' },
+            { id: 'job', label: 'Occupation / পেশা' },
+            { id: 'salary', label: 'Income / আয়' },
+            { id: 'maritalStatus', label: 'Marital Status / বৈবাহিক অবস্থা' }
         ],
         family: [
-            { id: 'fatherName', label: 'Father' },
-            { id: 'fatherWork', label: "Father's Job" },
-            { id: 'motherName', label: 'Mother' },
-            { id: 'motherWork', label: "Mother's Job" },
-            { id: 'parentsIncome', label: "Parents' Income-মাতার আয়" },
-            { id: 'familyMembers', label: 'Total Members' }
+            { id: 'fatherName', label: 'Father / পিতা' },
+            { id: 'fatherWork', label: "Father's Job / পিতার পেশা" },
+            { id: 'motherName', label: 'Mother / মাতা' },
+            { id: 'motherWork', label: "Mother's Job / মাতার পেশা" },
+            { id: 'parentsIncome', label: "Parents' Income / পিতা-মাতার আয়" },
+            { id: 'familyMembers', label: 'Total Members / সদস্য সংখ্যা' }
         ],
         contact: [
-            { id: 'presentAddress', label: 'Present Address' }
+            { id: 'presentAddress', label: 'Present Address / বর্তমান ঠিকানা' }
         ]
     };
 
-    /Prevent non-alphabet characters in names (allows English + Bangla)
+    // Prevent non-alphabet characters in names (allows English + Bangla)
     const alphaInputs = document.querySelectorAll('.alpha-only');
     alphaInputs.forEach(input => {
         input.addEventListener('input', function () {
-            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+            this.value = this.value.replace(/[^a-zA-Z\u0980-\u09FF\s]/g, '');
         });
     });
 
-    /Format Income with commas
+    // Format Income with commas
     const incomeInputs = document.querySelectorAll('.income-input');
     incomeInputs.forEach(input => {
         input.addEventListener('input', function (e) {
-            /Remove non-digit characters
+            // Remove non-digit characters
             let value = this.value.replace(/\D/g, "");
-            /Format back with commas if it's a number
+            // Format back with commas if it's a number
             if (value) {
                 this.value = Number(value).toLocaleString('en-US');
             } else {
@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /Load Address Suggestions into Datalist from geo-data.js
+    // Load Address Suggestions into Datalist from geo-data.js
     const addressDataList = document.getElementById('address-suggestions');
     if (addressDataList && typeof geoPlaces !== 'undefined') {
         const fragment = document.createDocumentFragment();
@@ -60,28 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         addressDataList.appendChild(fragment);
     }
 
-    /Convert Height Dropdowns to Hidden Value
-    const heightFt = document.getElementById('height-ft');
-    const heightIn = document.getElementById('height-in');
-    const heightHidden = document.getElementById('height');
-
-    function updateHeight() {
-        if (!heightHidden) return;
-        if (heightFt.value || heightIn.value) {
-            let feet = heightFt.value ? heightFt.value : "0'";
-            let inches = heightIn.value ? heightIn.value : "0\"";
-            heightHidden.value = `${feet} ${inches}`.trim();
-        } else {
-            heightHidden.value = '';
-        }
-        if (typeof renderAll === 'function') renderAll();
-    }
-    if (heightFt && heightIn) {
-        heightFt.addEventListener('input', updateHeight);
-        heightIn.addEventListener('input', updateHeight);
-    }
-
-    /Religion Logo Logic
+    // Religion Logo Logic
     const religionSelect = document.getElementById('religion');
     const religionLogo = document.getElementById('religion-logo');
     const bismillahText = document.querySelector('.bismillah');
@@ -107,11 +86,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /Render static schema items
+    // Render static schema items
     function renderStaticSection(sectionKey, tableId) {
         const table = document.getElementById(tableId);
         if (!table) return;
-        table.innerHTML = ''; /clear
+        table.innerHTML = ''; // clear
 
         let hasVisibleField = false;
 
@@ -135,7 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /Render dynamic education section as a specialized table
+    // Render dynamic education section as a specialized table
     function renderEducationSection() {
         const tbody = document.getElementById('table-education-body');
         if (!tbody) return;
@@ -169,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /Render dynamic grandparents/origin section
+    // Render dynamic grandparents/origin section
     function renderOriginSection() {
         const table = document.getElementById('table-origin');
         if (!table) return;
@@ -198,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /Render dynamic families section (siblings, grandparents)
+    // Render dynamic families section (siblings, grandparents)
     function renderFamilyMembersSection() {
         const table = document.getElementById('table-family-members');
         if (!table) return;
@@ -233,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /Central render map
+    // Central render map
     function renderAll() {
         renderStaticSection('personal', 'table-personal');
         renderStaticSection('family', 'table-family');
@@ -243,15 +222,15 @@ document.addEventListener('DOMContentLoaded', () => {
         renderFamilyMembersSection();
     }
 
-    /Bind inputs to fire renderAll
+    // Bind inputs to fire renderAll
     document.getElementById('biodata-form').addEventListener('input', () => {
         renderAll();
     });
 
-    /Initial render
+    // Initial render
     renderAll();
 
-    /Photo Upload and Crop Logic
+    // Photo Upload and Crop Logic
     const photoUpload = document.getElementById('photoUpload');
     const photoPreview = document.getElementById('biodata-photo');
     const cropperModal = document.getElementById('cropper-modal');
@@ -270,16 +249,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 cropperImage.src = event.target.result;
                 cropperModal.style.display = 'flex';
 
-                /Destroy old cropper instance if exists
+                // Destroy old cropper instance if exists
                 if (cropper) {
                     cropper.destroy();
                 }
 
-                /Initialize Cropper
+                // Initialize Cropper
                 cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1, /1:1 square crop
-                    viewMode: 1,    /Restrict crop box to canvas
-                    dragMode: 'move', /Allow panning the image
+                    aspectRatio: 1, // 1:1 square crop
+                    viewMode: 1,    // Restrict crop box to canvas
+                    dragMode: 'move', // Allow panning the image
                     autoCropArea: 0.8,
                     guides: true,
                     center: true,
@@ -289,17 +268,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    /Cancel Cropping
+    // Cancel Cropping
     cropCancelBtn.addEventListener('click', () => {
         cropperModal.style.display = 'none';
         if (cropper) {
             cropper.destroy();
             cropper = null;
         }
-        photoUpload.value = ''; /Clean input
+        photoUpload.value = ''; // Clean input
     });
 
-    /Zoom Controls
+    // Zoom Controls
     if (zoomInBtn) {
         zoomInBtn.addEventListener('click', () => {
             if (cropper) cropper.zoom(0.1);
@@ -312,11 +291,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /Apply Crop
+    // Apply Crop
     cropApplyBtn.addEventListener('click', () => {
         if (!cropper) return;
 
-        /Get cropped canvas
+        // Get cropped canvas
         const canvas = cropper.getCroppedCanvas({
             width: 300,
             height: 300,
@@ -324,40 +303,40 @@ document.addEventListener('DOMContentLoaded', () => {
             imageSmoothingQuality: 'high',
         });
 
-        /Set preview image source to cropped data URL
+        // Set preview image source to cropped data URL
         photoPreview.src = canvas.toDataURL('image/jpeg', 0.9);
         photoPreview.style.display = 'inline-block';
 
-        /Close modal and cleanup
+        // Close modal and cleanup
         cropperModal.style.display = 'none';
         cropper.destroy();
         cropper = null;
     });
 
-    /Add Dynamic Education Buttons
+    // Add Dynamic Education Buttons
     document.getElementById('add-edu-btn').addEventListener('click', () => {
         const container = document.getElementById('education-container');
         const div = document.createElement('div');
         div.className = 'input-grid education-item margin-top';
         div.innerHTML = `
             <div class="input-field">
-                <label>Qualification Name (E.g. S.S.C)</label>
+                <label>Qualification Name (E.g. S.S.C / সমমান)</label>
                 <input type="text" class="dyn-edu-name" placeholder="E.g. S.S.C" oninput="this.nextElementSibling.setAttribute('data-edu-label', this.value)" list="edu-name-suggestions">
                 <input type="hidden" class="dyn-edu-label-temp" data-edu-label="S.S.C">
             </div>
             <div class="input-field">
-                <label>GroupSubject (E.g. Science)</label>
+                <label>Group / Subject (E.g. Science / বিজ্ঞান)</label>
                 <input type="text" class="dyn-edu-stream" placeholder="Science" list="edu-stream-suggestions">
             </div>
             <div class="input-field span-full">
-                <label>ResultGrade (E.g. GPA 5.00)</label>
+                <label>Result / Grade (E.g. GPA 5.00)</label>
                 <input type="text" class="dyn-edu-gpa" placeholder="GPA 5.00">
             </div>
         `;
         container.appendChild(div);
     });
 
-    /Add Dynamic Grandparents Buttons
+    // Add Dynamic Grandparents Buttons
     const addGpBtn = document.getElementById('add-gp-btn');
     if (addGpBtn) {
         addGpBtn.addEventListener('click', () => {
@@ -375,7 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    /Add Dynamic Family Member Buttons
+    // Add Dynamic Family Member Buttons
     const addFamilyBtn = document.getElementById('add-family-member-btn');
     if (addFamilyBtn) {
         addFamilyBtn.addEventListener('click', () => {
@@ -384,36 +363,36 @@ document.addEventListener('DOMContentLoaded', () => {
             div.className = 'input-grid family-member-item margin-top';
             div.innerHTML = `
                 <div class="input-field">
-                    <label>Relation</label>
+                    <label>Relation / সম্পর্ক</label>
                     <select class="dyn-fm-relation">
-                        <option value="">Select</option>
-                        <option value="Brother">Brother</option>
-                        <option value="Sister">Sister</option>
-                        <option value="Dada">Dada (Paternal Grandfather)</option>
-                        <option value="Dadi">Dadi (Paternal Grandmother)</option>
-                        <option value="Nana">Nana (Maternal Grandfather)</option>
-                        <option value="Nani">Nani (Maternal Grandmother)</option>
+                        <option value="">Select / নির্বাচন করুন</option>
+                        <option value="Brother">Brother / ভাই</option>
+                        <option value="Sister">Sister / বোন</option>
+                        <option value="Dada">Dada (Paternal Grandfather) / দাদা</option>
+                        <option value="Dadi">Dadi (Paternal Grandmother) / দাদি</option>
+                        <option value="Nana">Nana (Maternal Grandfather) / নানা</option>
+                        <option value="Nani">Nani (Maternal Grandmother) / নানি</option>
                     </select>
                 </div>
                 <div class="input-field">
-                    <label>Name</label>
+                    <label>Name / নাম</label>
                     <input type="text" class="dyn-fm-name alpha-only" placeholder="Name">
                 </div>
                 <div class="input-field span-full">
-                    <label>Age(Optional)</label>
+                    <label>Age / বয়স (Optional)</label>
                     <input type="text" class="dyn-fm-age" placeholder="Age (will show in brackets)">
                 </div>
             `;
-            /Rebind alpha only validation for new inputs (allows English + Bangla)
+            // Rebind alpha only validation for new inputs (allows English + Bangla)
             const nameInp = div.querySelector('.dyn-fm-name');
             nameInp.addEventListener('input', function () {
-                this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+                this.value = this.value.replace(/[^a-zA-Z\u0980-\u09FF\s]/g, '');
             });
             container.appendChild(div);
         });
     }
 
-    /PDF Generation
+    // PDF Generation
     const downloadBtn = document.getElementById('download-btn-top');
     downloadBtn.addEventListener('click', () => {
         const genderInput = document.getElementById('gender');
@@ -440,7 +419,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /Feedback Form Submission Limiter via LocalStorage
+    // Feedback Form Submission Limiter via LocalStorage
     const feedbackForm = document.getElementById('web3-feedback-form');
     if (feedbackForm) {
         feedbackForm.addEventListener('submit', function (e) {
@@ -449,22 +428,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const messageEl = document.getElementById('feedback-form-message');
             const today = new Date().toLocaleDateString();
 
-            /Get local storage tracking object
+            // Get local storage tracking object
             let feedbackTracking = JSON.parse(localStorage.getItem('biodataFeedbackTracking')) || {};
 
-            /Check if this is a new day, clear tracking if so
+            // Check if this is a new day, clear tracking if so
             if (feedbackTracking.date !== today) {
                 feedbackTracking = { date: today, count: 0 };
             }
 
-            /Limit to 3 per day
+            // Limit to 3 per day
             if (feedbackTracking.count >= 3) {
                 messageEl.textContent = 'You have reached the maximum of 3 feedbacks per day. Please try again tomorrow!';
                 messageEl.style.display = 'block';
                 return;
             }
 
-            /Allow Submission, but hijacking the submit to do it via fetch instead of redirect
+            // Allow Submission, but hijacking the submit to do it via fetch instead of redirect
             messageEl.textContent = 'Sending...';
             messageEl.style.color = '#333';
             messageEl.style.display = 'block';
@@ -479,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     messageEl.textContent = 'Thank you for your feedback! It was sent successfully.';
                     messageEl.style.color = 'green';
 
-                    /Increment and save tracking limit
+                    // Increment and save tracking limit
                     feedbackTracking.count++;
                     localStorage.setItem('biodataFeedbackTracking', JSON.stringify(feedbackTracking));
 
