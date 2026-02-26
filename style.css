@@ -1,0 +1,439 @@
+/* 
+   Shahi Theme Variables
+   Colors inspired by South Asian royal weddings: maroon, gold, and creams.
+*/
+/* Custom Fonts */
+@font-face {
+    font-family: 'ArafaBangla';
+    src: url('fonts/আরাফা_বাংলা_ইউনিকোড_Arafa_Bangla_Unicode.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'MasudNandonik';
+    src: url('fonts/Masud Nandonik Premium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'FNJagat';
+    src: url('fonts/FN Jagat Modhumita.otf') format('opentype');
+}
+
+:root {
+    --primary-maroon: #7b0d1e;
+    --primary-dark: #4a040e;
+    --accent-gold: #d4af37;
+    --accent-gold-light: #f5df8b;
+    --bg-light: #faf7f2;
+    --bg-white: #ffffff;
+    --text-main: #333333;
+    --text-muted: #666666;
+
+    --font-sans: 'Outfit', sans-serif;
+    --font-serif: 'Playfair Display', serif;
+    --font-bangla: 'MasudNandonik', 'ArafaBangla', 'FNJagat', 'Noto Serif Bengali', serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-bangla), var(--font-sans);
+    background-color: var(--bg-light);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Header */
+.app-header {
+    background: linear-gradient(135deg, var(--primary-maroon), var(--primary-dark));
+    color: var(--accent-gold);
+    text-align: center;
+    padding: 2rem 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.app-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.app-header h1 span {
+    font-family: var(--font-bangla);
+    font-size: 2rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.app-header p {
+    color: #fdfdfd;
+    font-size: 1.1rem;
+    margin-top: 0.5rem;
+}
+
+/* Main Layout */
+.app-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+@media (max-width: 992px) {
+    .app-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Form Section */
+.form-section {
+    background: var(--bg-white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    border-top: 5px solid var(--primary-maroon);
+}
+
+.form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--bg-light);
+    padding-bottom: 1rem;
+}
+
+.form-header h2 {
+    font-family: var(--font-serif);
+    color: var(--primary-dark);
+    font-size: 1.8rem;
+}
+
+.primary-btn {
+    background: var(--accent-gold);
+    color: var(--primary-dark);
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+    box-shadow: 0 4px 6px rgba(212, 175, 55, 0.3);
+}
+
+.primary-btn:hover {
+    background: var(--primary-maroon);
+    color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(123, 13, 30, 0.2);
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--primary-maroon);
+    border: 2px solid var(--primary-maroon);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--font-sans);
+}
+
+.secondary-btn:hover {
+    background: var(--primary-maroon);
+    color: white;
+}
+
+.margin-top {
+    margin-top: 1rem;
+}
+
+.form-group-title {
+    font-family: var(--font-serif);
+    color: var(--primary-maroon);
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 1.5rem 0 1rem;
+    border-left: 4px solid var(--accent-gold);
+    padding-left: 10px;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+@media (max-width: 576px) {
+    .input-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.input-field {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field.span-full {
+    grid-column: 1 / -1;
+}
+
+.input-field label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    margin-bottom: 0.4rem;
+}
+
+.input-field input,
+.input-field select {
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-family: var(--font-bangla), var(--font-sans);
+    font-size: 1rem;
+    background-color: var(--bg-light);
+    transition: border-color 0.3s;
+}
+
+.input-field input:focus,
+.input-field select:focus {
+    outline: none;
+    border-color: var(--accent-gold);
+    background-color: var(--bg-white);
+    box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+}
+
+/* Biodata Preview Area */
+.preview-section {
+    position: relative;
+}
+
+.sticky-container {
+    position: sticky;
+    top: 2rem;
+}
+
+/* The Document (A4 Ratio styling for PDF) */
+.biodata-document {
+    background: var(--bg-white);
+    width: 100%;
+    /* Approximate A4 ratio */
+    min-height: 297mm;
+    /* Will scale down */
+    max-width: 210mm;
+    margin: 0 auto;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.document-border {
+    border: 3px double var(--accent-gold);
+    border-radius: 4px;
+    height: 100%;
+    position: relative;
+    padding: 2.5rem;
+}
+
+.ornament {
+    position: absolute;
+    width: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.top-ornament {
+    top: 0;
+}
+
+.bottom-ornament {
+    bottom: 0;
+}
+
+.bio-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.bismillah {
+    font-family: 'Amiri', serif;
+    /* Or fallback to arabic styling */
+    font-size: 1.5rem;
+    color: var(--primary-maroon);
+    margin-bottom: 1rem;
+    font-weight: normal;
+}
+
+.title-en {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    margin-bottom: 0.2rem;
+}
+
+.title-bn {
+    font-family: var(--font-bangla);
+    font-size: 1.8rem;
+    color: var(--primary-maroon);
+}
+
+.religion-logo-container {
+    margin: 0.5rem auto;
+    text-align: center;
+}
+
+.photo-preview-container {
+    margin: 1rem auto;
+    text-align: center;
+}
+
+#biodata-photo {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--accent-gold);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.bio-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.bio-section {
+    margin-bottom: 0.5rem;
+}
+
+.bio-section.hidden-section {
+    display: none !important;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: 1.3rem;
+    color: var(--primary-maroon);
+    border-bottom: 1px solid var(--accent-gold-light);
+    padding-bottom: 0.3rem;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.section-title .bn {
+    font-family: var(--font-bangla);
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.bio-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.bio-table td {
+    padding: 0.4rem 0;
+    font-size: 1.05rem;
+    vertical-align: top;
+    color: var(--text-main);
+}
+
+.bio-table td:first-child {
+    width: 35%;
+    font-weight: 500;
+    color: var(--primary-dark);
+}
+
+.bio-table td.colon {
+    width: 5%;
+    text-align: center;
+    font-weight: bold;
+    color: var(--accent-gold);
+}
+
+.bio-table td.val {
+    width: 60%;
+    font-family: var(--font-serif);
+    /* Mixed serif/sans, can use bangla too */
+    font-weight: 400;
+}
+
+/* Typography adjustment for Bangla mixed text */
+.val {
+    font-family: var(--font-bangla), var(--font-sans) !important;
+}
+
+/* PDF specifics */
+.html2pdf__page-break {
+    margin-top: 1rem;
+}
+
+/* Modal Overlay Data */
+.modal-overlay {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: var(--bg-white);
+    padding: 1.5rem;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-top: 5px solid var(--primary-maroon);
+}
+
+.modal-content h3 {
+    margin-bottom: 1rem;
+    font-family: var(--font-serif);
+    color: var(--primary-maroon);
+}
+
+.cropper-container {
+    width: 100%;
+    max-height: 60vh;
+    background-color: #333;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cropper-container img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.modal-actions {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>বায়োডাটা বিডি (Biodata BD) | শাহী বায়োডাটা</title>
+
+    <!-- Fonts for elegant Shahi look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Serif+Bengali:wght@400;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- html2pdf Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- Cropper.js Library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
+
+    <script src="geo-data.js"></script>
+    <script src="script.js"></script>
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="logo-wrapper">
+            <svg width="60" height="60" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="100" cy="100" r="85" stroke="#2D89C7" stroke-width="4" />
+                <circle cx="100" cy="100" r="75" stroke="#8DC63F" stroke-width="4" />
+                <circle cx="90" cy="85" r="18" fill="#8DC63F" />
+                <circle cx="120" cy="95" r="14" fill="#2D89C7" />
+                <path d="M50 140C50 110 90 105 100 125C110 105 150 110 150 140" stroke="#8DC63F" stroke-width="6"
+                    stroke-linecap="round" />
+                <path d="M90 65C90 55 100 50 105 55C105 60 100 65 95 65" fill="#8DC63F" />
+                <path d="M90 65C85 60 85 50 95 50" fill="#8DC63F" />
+            </svg>
+        </div>
+        <h1>বায়োডাটা বিডি (Biodata BD)</h1>
+        <p>Create your elegant wedding biodata instantly in English and Bangla</p>
+    </header>
+
+    <main class="app-container">
+        <!-- FORM SECTION -->
+        <section class="form-section">
+            <div class="form-header">
+                <h2>Enter Details</h2>
+                <button id="download-btn-top" class="primary-btn">Download PDF</button>
+            </div>
+
+            <form id="biodata-form">
+                <!-- Photo Upload -->
+                <div class="form-group-title">Photo (ছবি)</div>
+                <div class="input-grid">
+                    <div class="input-field span-full">
+                        <label for="photoUpload">Upload Photo / ছবি আপলোড করুন</label>
+                        <input type="file" id="photoUpload" accept="image/*">
+                    </div>
+                </div>
+
+                <!-- Personal Details -->
+                <div class="form-group-title">Personal Details (ব্যক্তিগত তথ্য)</div>
+                <div class="input-grid">
+                    <div class="input-field">
+                        <label for="fullName">Full Name / পুরা নাম</label>
+                        <input type="text" id="fullName" placeholder="E.g. Kazi Tariq / কাজী তারিক" class="alpha-only">
+                    </div>
+                    <div class="input-field">
+                        <label for="gender">Gender / লিঙ্গ *</label>
+                        <select id="gender" required>
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Male">Male / পুরুষ</option>
+                            <option value="Female">Female / মহিলা</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="religion">Religion / ধর্ম</label>
+                        <select id="religion">
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Islam">Islam / ইসলাম ধর্ম</option>
+                            <option value="Hindu">Hindu / হিন্দু ধর্ম</option>
+                            <option value="Christian">Christian / খ্রিস্টান ধর্ম</option>
+                            <option value="Other">Other / অন্যান্য</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="age">Age / বয়স</label>
+                        <input type="text" id="age" placeholder="26">
+                    </div>
+                    <div class="input-field">
+                        <label for="height">Height / উচ্চতা</label>
+                        <input type="text" id="height" placeholder="5'8&quot;">
+                    </div>
+                    <div class="input-field">
+                        <label for="bloodGroup">Blood Group / রক্তের গ্রুপ</label>
+                        <select id="bloodGroup">
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="maritalStatus">Marital Status / বৈবাহিক অবস্থা</label>
+                        <select id="maritalStatus">
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Unmarried / অবিবাহিত">Unmarried / অবিবাহিত</option>
+                            <option value="Widowed / বিধবা / বিপত্নীক">Widowed / বিধবা / বিপত্নীক</option>
+                            <option value="Divorced / তালাকপ্রাপ্ত">Divorced / তালাকপ্রাপ্ত</option>
+                        </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="job">Occupation / পেশা</label>
+                        <input type="text" id="job" list="job-suggestions" placeholder="E.g. Software Engineer">
+                        <datalist id="job-suggestions">
+                            <option value="Software Engineer / সফটওয়্যার ইঞ্জিনিয়ার">
+                            <option value="Doctor / ডাক্তার">
+                            <option value="Teacher / শিক্ষক">
+                            <option value="Businessman / ব্যবসায়ী">
+                            <option value="Govt Employee / সরকারি চাকরিজীবী">
+                            <option value="Private Job / বেসরকারি চাকরি">
+                            <option value="Student / ছাত্র">
+                        </datalist>
+                    </div>
+                    <div class="input-field">
+                        <label for="salary">Monthly Income / মাসিক আয়</label>
+                        <input type="text" id="salary" class="income-input" placeholder="E.g. 50000">
+                    </div>
+                </div>
+
+                <!-- Family Details -->
+                <div class="form-group-title">Family Details (পারিবারিক তথ্য)</div>
+                <div class="input-grid">
+                    <div class="input-field">
+                        <label for="fatherName">Father's Name / পিতার নাম</label>
+                        <input type="text" id="fatherName" class="alpha-only" placeholder="">
+                    </div>
+                    <div class="input-field">
+                        <label for="fatherWork">Father's Work / পিতার পেশা</label>
+                        <input type="text" id="fatherWork" list="parent-work-suggestions"
+                            placeholder="Businessman / Retired">
+                        <datalist id="parent-work-suggestions">
+                            <option value="Businessman / ব্যবসায়ী">
+                            <option value="Govt Employee / সরকারি কর্মকর্তা">
+                            <option value="Private Job / বেসরকারি চাকরি">
+                            <option value="Farmer / কৃষক">
+                            <option value="Teacher / শিক্ষক">
+                            <option value="Retired / অবসরপ্রাপ্ত">
+                            <option value="Homemaker / গৃহিণী">
+                            <option value="Deceased / মৃত">
+                        </datalist>
+                    </div>
+                    <div class="input-field">
+                        <label for="motherName">Mother's Name / মাতার নাম</label>
+                        <input type="text" id="motherName" class="alpha-only" placeholder="">
+                    </div>
+                    <div class="input-field">
+                        <label for="motherWork">Mother's Work / মাতার পেশা</label>
+                        <input type="text" id="motherWork" list="parent-work-suggestions" placeholder="Homemaker">
+                    </div>
+                    <div class="input-field">
+                        <label for="parentsIncome">Parents' Monthly Income / পিতা-মাতার মাসিক আয়</label>
+                        <input type="text" id="parentsIncome" class="income-input" placeholder="E.g. 100000">
+                    </div>
+                    <div class="input-field">
+                        <label for="familyMembers">Total Members / পরিবারের সদস্য সংখ্যা</label>
+                        <input type="text" id="familyMembers" placeholder="5">
+                    </div>
+                </div>
+
+                <div id="family-member-container">
+                    <!-- Dynamic family members go here -->
+                </div>
+                <button type="button" id="add-family-member-btn" class="secondary-btn margin-top">+ Add
+                    Brother/Sister/Grandparent</button>
+
+                <!-- Education Details -->
+                <div class="form-group-title">Education (শিক্ষাগত যোগ্যতা)</div>
+                <!-- Dynamic Education Container -->
+                <div id="education-container">
+                    <div class="input-grid education-item">
+                        <div class="input-field">
+                            <label>Qualification Name (E.g. S.S.C / সমমান)</label>
+                            <input type="text" class="dyn-edu-name" placeholder="S.S.C"
+                                oninput="this.nextElementSibling.setAttribute('data-edu-label', this.value)"
+                                list="edu-name-suggestions">
+                            <input type="hidden" class="dyn-edu-label-temp" data-edu-label="S.S.C">
+                        </div>
+                        <div class="input-field">
+                            <label>Group / Subject (E.g. Science / বিজ্ঞান)</label>
+                            <input type="text" class="dyn-edu-stream" placeholder="Science"
+                                list="edu-stream-suggestions">
+                        </div>
+                        <div class="input-field span-full">
+                            <label>Result / Grade (E.g. GPA 5.00)</label>
+                            <input type="text" class="dyn-edu-gpa" placeholder="GPA 5.00">
+                        </div>
+                    </div>
+                </div>
+                <!-- Add More Education Button -->
+                <button type="button" id="add-edu-btn" class="secondary-btn margin-top">+ Add Qualification</button>
+
+                <datalist id="edu-name-suggestions">
+                    <option value="S.S.C">
+                    <option value="H.S.C">
+                    <option value="Dakhil">
+                    <option value="Alim">
+                    <option value="B.Sc">
+                    <option value="B.A">
+                    <option value="B.Com">
+                    <option value="M.Sc">
+                    <option value="M.A">
+                    <option value="M.B.B.S">
+                    <option value="Diploma">
+                </datalist>
+                <datalist id="edu-stream-suggestions">
+                    <option value="Science / বিজ্ঞান">
+                    <option value="Arts / মানবিক">
+                    <option value="Commerce / ব্যবসায় শিক্ষা">
+                    <option value="CSE">
+                    <option value="EEE">
+                    <option value="Civil">
+                </datalist>
+
+                <!-- Regional / Grandparents Details -->
+                <div class="form-group-title">Address & Grandparents (ঠিকানা ও বংশ)</div>
+                <div id="grandparents-container">
+                    <div class="input-grid gp-item">
+                        <div class="input-field span-full">
+                            <label for="presentAddress">Present Address / বর্তমান ঠিকানা</label>
+                            <input type="text" id="presentAddress" placeholder="Gulshan, Dhaka">
+                        </div>
+                        <div class="input-field">
+                            <label>Dadar Bari (Paternal) / দাদার বাড়ি</label>
+                            <input type="text" class="dyn-gp-input" data-gp-label="Dadar Bari / দাদার বাড়ি"
+                                placeholder="Comilla">
+                        </div>
+                        <div class="input-field">
+                            <label>Nanar Bari (Maternal) / নানার বাড়ি</label>
+                            <input type="text" class="dyn-gp-input" data-gp-label="Nanar Bari / নানার বাড়ি"
+                                placeholder="Noakhali">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" id="add-gp-btn" class="secondary-btn margin-top">+ Add Grandparent
+                    Details</button>
+            </form>
+        </section>
+
+        <!-- PREVIEW SECTION -->
+        <section class="preview-section">
+            <div class="sticky-container">
+                <div id="biodata-document" class="biodata-document">
+                    <div class="document-border">
+                        <!-- Floral / Ornamental Top -->
+                        <div class="ornament top-ornament">
+                            <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M50 0 C40 10 30 20 0 20 L100 20 C70 20 60 10 50 0 Z" fill="#D4AF37" />
+                            </svg>
+                        </div>
+
+                        <div class="bio-header">
+                            <h1 class="bismillah">بسم الله الرحمن الرحيم</h1>
+                            <div class="religion-logo-container">
+                                <img id="religion-logo" src="" alt="" style="display: none; height: 50px;">
+                            </div>
+                            <div class="photo-preview-container">
+                                <img id="biodata-photo" src="" alt="Profile Photo" style="display: none;">
+                            </div>
+                            <h2 class="title-en">Biodata</h2>
+                            <h3 class="title-bn">জীবনবৃত্তান্ত</h3>
+                        </div>
+
+                        <div class="bio-content">
+                            <!-- Personal Section -->
+                            <div class="bio-section" id="section-personal">
+                                <h4 class="section-title">Personal Details <span class="bn">ব্যক্তিগত তথ্য</span></h4>
+                                <table class="bio-table" id="table-personal">
+                                    <!-- Dynamic rows inside -->
+                                </table>
+                            </div>
+
+                            <!-- Family Section -->
+                            <div class="bio-section" id="section-family">
+                                <h4 class="section-title">Family Details <span class="bn">পারিবারিক অবস্থা</span></h4>
+                                <table class="bio-table" id="table-family">
+                                    <!-- Dynamic rows inside -->
+                                </table>
+                            </div>
+
+                            <!-- Education Section -->
+                            <div class="bio-section" id="section-education">
+                                <h4 class="section-title">Education <span class="bn">শিক্ষাগত যোগ্যতা</span></h4>
+                                <table class="bio-table" id="table-education">
+                                    <!-- Dynamic rows inside -->
+                                </table>
+                            </div>
+
+                            <!-- Family Structure (Siblings/Grandparents) Section -->
+                            <div class="bio-section" id="section-family-members">
+                                <h4 class="section-title">Family Details (Extended) <span class="bn">পরিজনের
+                                        বিবরণ</span></h4>
+                                <table class="bio-table" id="table-family-members">
+                                    <!-- Dynamic rows inside -->
+                                </table>
+                            </div>
+
+                            <!-- Present Address Section -->
+                            <div class="bio-section" id="section-contact">
+                                <h4 class="section-title">Contact & Regional <span class="bn">যোগাযোগ ও ঠিকানা</span>
+                                </h4>
+                                <table class="bio-table" id="table-contact">
+                                    <!-- Dynamic rows inside -->
+                                </table>
+                            </div>
+
+                        </div>
+
+                        <!-- Floral / Ornamental Bottom -->
+                        <div class="ornament bottom-ornament">
+                            <svg viewBox="0 0 100 20" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                style="transform: rotate(180deg);">
+                                <path d="M50 0 C40 10 30 20 0 20 L100 20 C70 20 60 10 50 0 Z" fill="#D4AF37" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Cropper Modal -->
+    <div id="cropper-modal" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Crop Your Photo</h3>
+            <div class="cropper-container">
+                <img id="cropper-image" src="" alt="To Crop">
+            </div>
+            <div class="modal-actions">
+                <button type="button" id="crop-cancel-btn" class="secondary-btn">Cancel</button>
+                <button type="button" id="crop-apply-btn" class="primary-btn">Crop & Apply</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- html2pdf Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <!-- Cropper.js Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <!-- Wait for Geo places to load first -->
+    <script src="script.js"></script>
+</body>
+
+</html>
+```
