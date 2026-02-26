@@ -60,6 +60,27 @@ document.addEventListener('DOMContentLoaded', () => {
         addressDataList.appendChild(fragment);
     }
 
+    // Convert Height Dropdowns to Hidden Value
+    const heightFt = document.getElementById('height-ft');
+    const heightIn = document.getElementById('height-in');
+    const heightHidden = document.getElementById('height');
+
+    function updateHeight() {
+        if (!heightHidden) return;
+        if (heightFt.value || heightIn.value) {
+            let feet = heightFt.value ? heightFt.value : "0'";
+            let inches = heightIn.value ? heightIn.value : "0\"";
+            heightHidden.value = `${feet} ${inches}`.trim();
+        } else {
+            heightHidden.value = '';
+        }
+        if (typeof renderAll === 'function') renderAll();
+    }
+    if (heightFt && heightIn) {
+        heightFt.addEventListener('input', updateHeight);
+        heightIn.addEventListener('input', updateHeight);
+    }
+
     // Religion Logo Logic
     const religionSelect = document.getElementById('religion');
     const religionLogo = document.getElementById('religion-logo');

@@ -91,9 +91,33 @@
                         <label for="age">Age / বয়স</label>
                         <input type="text" id="age" placeholder="26">
                     </div>
-                    <div class="input-field">
-                        <label for="height">Height / উচ্চতা</label>
-                        <input type="text" id="height" placeholder="5'8&quot;">
+                    <div class="input-field height-group">
+                        <label>Height / উচ্চতা</label>
+                        <input type="hidden" id="height" value="">
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="height-ft" style="width: 50%;">
+                                <option value="">Feet / ফুট</option>
+                                <option value="4'">4'</option>
+                                <option value="5'">5'</option>
+                                <option value="6'">6'</option>
+                                <option value="7'">7'</option>
+                            </select>
+                            <select id="height-in" style="width: 50%;">
+                                <option value="">Inches / ইঞ্চি</option>
+                                <option value="0&quot;">0"</option>
+                                <option value="1&quot;">1"</option>
+                                <option value="2&quot;">2"</option>
+                                <option value="3&quot;">3"</option>
+                                <option value="4&quot;">4"</option>
+                                <option value="5&quot;">5"</option>
+                                <option value="6&quot;">6"</option>
+                                <option value="7&quot;">7"</option>
+                                <option value="8&quot;">8"</option>
+                                <option value="9&quot;">9"</option>
+                                <option value="10&quot;">10"</option>
+                                <option value="11&quot;">11"</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="input-field">
                         <label for="bloodGroup">Blood Group / রক্তের গ্রুপ</label>
