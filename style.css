@@ -238,13 +238,13 @@ body {
     box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
     padding: 1.5rem;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 .document-border {
     border: 3px double var(--accent-gold);
     border-radius: 4px;
-    height: 100%;
+    min-height: 100%;
     position: relative;
     padding: 2.5rem;
 }

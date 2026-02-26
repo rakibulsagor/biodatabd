@@ -496,11 +496,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const element = document.getElementById('biodata-document');
 
         const opt = {
-            margin: [1, 1, 1, 1],
+            margin: [0.6, 0.6, 0.6, 0.6],
             filename: 'Wedding_Biodata.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: element.scrollWidth },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
         };
 
         element.classList.add('generating-pdf');
