@@ -240,6 +240,8 @@ body {
     padding: 1.5rem;
     position: relative;
     overflow: visible;
+    box-sizing: border-box;
+    /* Ensure padding doesn't affect width */
 }
 
 .document-border {

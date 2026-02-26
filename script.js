@@ -543,72 +543,118 @@ document.addEventListener('DOMContentLoaded', () => {
         const docBorder = element.querySelector('.document-border');
         const origBorder = docBorder ? (docBorder.getAttribute('style') || '') : '';
 
-        // ── Expand layout to A4 width, transparent background ──
-        const CAPTURE_W = 794;
-        appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
-        previewSec.style.cssText = 'width:100%;';
-        stickyCont.style.cssText = 'position:static;';
-        element.style.cssText = `width:${CAPTURE_W}px;max-width:${CAPTURE_W}px;margin:0 auto;`
-            + 'box-shadow:none;overflow:visible;min-height:unset;'
-            + 'background:transparent!important;background-image:none!important;';
-        if (docBorder) {
-            docBorder.style.border = 'none';
-            docBorder.style.background = 'transparent';
-        }
-        await new Promise(r => setTimeout(r, 200));
+        try {
+            // ── Expand layout to A4 width, transparent background ──
+            const CAPTURE_W = 794;
+            appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
+            previewSec.style.cssText = 'width:100%;';
+            stickyCont.style.cssText = 'position:static;';
+            element.style.cssText = `width:${CAPTURE_W}px;max-width:${CAPTURE_W}px;margin:0 auto;`
+                + 'box-shadow:none;overflow:visible;min-height:unset;'
+                + 'background:transparent!important;background-image:none!important;';
+            if (docBorder) {
+                docBorder.style.border = 'none';
+                docBorder.style.background = 'transparent';
+            }
+            await new Promise(r => setTimeout(r, 200));
 
-        // ── Section visibility helpers ──
-        const bioHeader = element.querySelector('.bio-header');
-        const ornaments = element.querySelectorAll('.ornament');
-        const watermarkEl = element.querySelector('.watermark');
-        const allSections = [...element.querySelectorAll('.bio-section')];
+            // ── Section visibility helpers ──
+            const bioHeader = element.querySelector('.bio-header');
+            const ornaments = element.querySelectorAll('.ornament');
+            const watermarkEl = element.querySelector('.watermark');
+            const allSections = [...element.querySelectorAll('.bio-section')];
 
-        const page1Ids = ['section-personal', 'section-family'];
-        const page2Ids = ['section-education', 'section-family-members', 'section-contact'];
+            const page1Ids = ['section-personal', 'section-family'];
+            const page2Ids = ['section-education', 'section-family-members', 'section-contact'];
 
-        function showOnly(sectionIds, showHeader) {
-            if (bioHeader) bioHeader.style.display = showHeader ? '' : 'none';
-            if (watermarkEl) watermarkEl.style.display = 'none';
-            ornaments.forEach(o => o.style.display = 'none');
-            allSections.forEach(s => {
-                const keep = sectionIds.includes(s.id) && !s.classList.contains('hidden-section');
-                s.style.display = keep ? '' : 'none';
-            });
-        }
+            function showOnly(sectionIds, showHeader) {
+                if (bioHeader) bioHeader.style.display = showHeader ? '' : 'none';
+                if (watermarkEl) watermarkEl.style.display = 'none';
+                ornaments.forEach(o => o.style.display = 'none');
+                allSections.forEach(s => {
+                    const keep = sectionIds.includes(s.id) && !s.classList.contains('hidden-section');
+                    s.style.display = keep ? '' : 'none';
+                });
+            }
 
-        function restoreSections() {
-            if (bioHeader) bioHeader.style.display = '';
-            if (watermarkEl) watermarkEl.style.display = '';
-            ornaments.forEach(o => o.style.display = '');
-            allSections.forEach(s => s.style.display = '');
-        }
+            function restoreSections() {
+                if (bioHeader) bioHeader.style.display = '';
+                if (watermarkEl) watermarkEl.style.display = '';
+                ornaments.forEach(o => o.style.display = '');
+                allSections.forEach(s => s.style.display = '');
+            }
 
-        const captureOpts = { scale: 2, useCORS: true, scrollY: 0, backgroundColor: null };
+            const captureOpts = { scale: 2, useCORS: true, scrollY: 0, backgroundColor: null };
 
-        // ── Capture Page 1: header + personal + family ──
-        showOnly(page1Ids, true);
-        await new Promise(r => setTimeout(r, 60));
-        const canvas1 = await html2canvas(element, captureOpts);
-
-        // ── Capture Page 2: education + extended family + contact ──
-        const visiblePage2 = page2Ids.filter(id => {
-            const s = document.getElementById(id);
-            return s && !s.classList.contains('hidden-section');
-        });
-        let canvas2 = null;
-        if (visiblePage2.length > 0) {
-            showOnly(page2Ids, false);
+            // ── Capture Page 1: header + personal + family ──
+            showOnly(page1Ids, true);
             await new Promise(r => setTimeout(r, 60));
-            canvas2 = await html2canvas(element, captureOpts);
-        }
+            const canvas1 = await html2canvas(element, captureOpts);
 
-        // ── Restore all styles ──
-        restoreSections();
-        appContainer.setAttribute('style', origCont);
-        previewSec.setAttribute('style', origPrev);
-        stickyCont.setAttribute('style', origSticky);
-        element.setAttribute('style', origEl);
-        if (docBorder) docBorder.setAttribute('style', origBorder);
+            // ── Capture Page 2: education + extended family + contact ──
+            const visiblePage2 = page2Ids.filter(id => {
+                const s = document.getElementById(id);
+                return s && !s.classList.contains('hidden-section');
+            });
+            let canvas2 = null;
+            if (visiblePage2.length > 0) {
+                showOnly(page2Ids, false);
+                await new Promise(r => setTimeout(r, 60));
+                canvas2 = await html2canvas(element, captureOpts);
+            }
+
+            // ── Restore section visibility immediately ──
+            restoreSections();
+
+            // ── Load assets ──
+            const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
+            const logoSvg = document.querySelector('.logo-wrapper svg');
+            const logoDataUrl = logoSvg ? await svgToBase64(logoSvg, 80) : null;
+
+            // ── PDF constants ──
+            const A4_W = 210, A4_H = 297;
+            const MARGIN = 15;
+            const contentW = A4_W - 2 * MARGIN;   // 180 mm
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+
+            function addPageContent(canvas) {
+                const canvasW = canvas.width;
+                const mmPerPx = contentW / canvasW;
+                const contentH = (canvas.height * mmPerPx);
+
+                // Template background
+                pdf.addImage(templateDataUrl, 'JPEG', 0, 0, A4_W, A4_H);
+
+                // Biodata content
+                pdf.addImage(canvas.toDataURL('image/png'), 'PNG', MARGIN, MARGIN, contentW, contentH);
+
+                // ── Watermark: logo + site URL ──
+                if (logoDataUrl) {
+                    const logoMm = 7;
+                    pdf.addImage(logoDataUrl, 'PNG', A4_W / 2 - logoMm / 2 - 22, A4_H - 13, logoMm, logoMm);
+                }
+                pdf.setFontSize(8);
+                pdf.setTextColor(100, 100, 100);
+                pdf.text('Created via biodatabd.vercel.app', A4_W / 2 + (logoDataUrl ? 2 : 0), A4_H - 9, { align: 'left' });
+            }
+
+            addPageContent(canvas1);
+            if (canvas2) {
+                pdf.addPage();
+                addPageContent(canvas2);
+            }
+
+            pdf.save('Wedding_Biodata.pdf');
+        } finally {
+            // Restore all styles
+            appContainer.setAttribute('style', origCont);
+            previewSec.setAttribute('style', origPrev);
+            stickyCont.setAttribute('style', origSticky);
+            element.setAttribute('style', origEl);
+            if (docBorder) docBorder.setAttribute('style', origBorder);
+        }
 
         // ── Load assets ──
         const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
@@ -654,25 +700,91 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const downloadBtn = document.getElementById('download-btn-top');
-    downloadBtn.addEventListener('click', async () => {
+    const downloadPngBtn = document.getElementById('download-png-btn');
+
+    async function handleDownload(type) {
+        const btn = type === 'pdf' ? downloadBtn : downloadPngBtn;
         const genderInput = document.getElementById('gender');
+
         if (!genderInput.value) {
-            alert('Please select a Gender before generating the PDF.');
+            alert(`Please select a Gender before generating the ${type.toUpperCase()}.`);
             genderInput.focus();
             return;
         }
-        downloadBtn.disabled = true;
-        downloadBtn.textContent = 'Generating…';
+
+        const originalText = btn.textContent;
+        btn.disabled = true;
+        btn.textContent = 'Generating…';
+
         try {
-            await generateBioPDF();
+            if (type === 'pdf') {
+                await generateBioPDF();
+            } else {
+                await generateBioPNG();
+            }
         } catch (err) {
-            console.error('PDF generation error:', err);
-            alert('PDF generation failed — please try again.');
+            console.error(`${type.toUpperCase()} generation error:`, err);
+            alert(`${type.toUpperCase()} generation failed — please try again.`);
         } finally {
-            downloadBtn.disabled = false;
-            downloadBtn.textContent = 'Download PDF';
+            btn.disabled = false;
+            btn.textContent = originalText;
         }
-    });
+    }
+
+    async function generateBioPNG() {
+        const element = document.getElementById('biodata-document');
+        const appContainer = document.querySelector('.app-container');
+        const previewSec = document.querySelector('.preview-section');
+        const stickyCont = document.querySelector('.sticky-container');
+
+        // Save originals
+        const origCont = appContainer.getAttribute('style') || '';
+        const origPrev = previewSec.getAttribute('style') || '';
+        const origSticky = stickyCont.getAttribute('style') || '';
+        const origEl = element.getAttribute('style') || '';
+        const docBorder = element.querySelector('.document-border');
+        const origBorder = docBorder ? (docBorder.getAttribute('style') || '') : '';
+
+        try {
+            // Expand layout for capture
+            const CAPTURE_W = 794;
+            appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
+            previewSec.style.cssText = 'width:100%;';
+            stickyCont.style.cssText = 'position:static;';
+            element.style.cssText = `width:${CAPTURE_W}px;max-width:${CAPTURE_W}px;margin:0 auto;`
+                + 'box-shadow:none;overflow:visible;min-height:unset;';
+
+            if (docBorder) {
+                docBorder.style.border = 'none';
+            }
+
+            await new Promise(r => setTimeout(r, 200));
+
+            // Capture the whole document
+            const canvas = await html2canvas(element, {
+                scale: 2,
+                useCORS: true,
+                scrollY: 0,
+                backgroundColor: '#ffffff'
+            });
+
+            // Download PNG
+            const link = document.createElement('a');
+            link.download = 'Wedding_Biodata.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        } finally {
+            // Restore styles
+            appContainer.setAttribute('style', origCont);
+            previewSec.setAttribute('style', origPrev);
+            stickyCont.setAttribute('style', origSticky);
+            element.setAttribute('style', origEl);
+            if (docBorder) docBorder.setAttribute('style', origBorder);
+        }
+    }
+
+    downloadBtn.addEventListener('click', () => handleDownload('pdf'));
+    downloadPngBtn.addEventListener('click', () => handleDownload('png'));
 
     // Feedback Form Submission Limiter via LocalStorage
     const feedbackForm = document.getElementById('web3-feedback-form');
