@@ -79,7 +79,8 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- Cascading Address Dropdowns (District -> Upazila) ---
+    // --- Cascading Address Dropdowns (Division -> District -> Upazila) ---
+    const divisionSelect = document.getElementById('presentDivision');
     const zillaSelect = document.getElementById('presentZilla');
     const upazilaSelect = document.getElementById('presentUpazila');
     const addressHidden = document.getElementById('presentAddress');
@@ -90,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (village && village.value) parts.push(village.value);
         if (upazilaSelect && upazilaSelect.value) parts.push(upazilaSelect.value);
         if (zillaSelect && zillaSelect.value) parts.push(zillaSelect.value);
+        if (divisionSelect && divisionSelect.value) parts.push(divisionSelect.value + ' Division');
         parts.push('Bangladesh');
         if (addressHidden) {
             addressHidden.value = parts.join(', ');
@@ -97,27 +99,46 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Also update address when village typed
+    // Update address when village typed
     const villageInput = document.getElementById('presentVillage');
     if (villageInput) villageInput.addEventListener('input', updateAddressHidden);
 
-    if (zillaSelect && typeof geoDistricts !== 'undefined') {
-        // Populate districts
-        geoDistricts.forEach(dist => {
+    if (divisionSelect && typeof geoDivisions !== 'undefined') {
+        // Populate divisions
+        geoDivisions.forEach(div => {
             const opt = document.createElement('option');
-            opt.value = dist;
-            opt.textContent = dist;
-            zillaSelect.appendChild(opt);
+            opt.value = div;
+            opt.textContent = div;
+            divisionSelect.appendChild(opt);
+        });
+
+        divisionSelect.addEventListener('change', function () {
+            const selDiv = this.value;
+            // Reset district & upazila
+            zillaSelect.innerHTML = '<option value="">Select Zilla</option>';
+            upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
+            zillaSelect.disabled = true;
+            upazilaSelect.disabled = true;
+
+            if (selDiv && geoDistrictsByDivision[selDiv]) {
+                geoDistrictsByDivision[selDiv].forEach(dist => {
+                    const opt = document.createElement('option');
+                    opt.value = dist;
+                    opt.textContent = dist;
+                    zillaSelect.appendChild(opt);
+                });
+                zillaSelect.disabled = false;
+            }
+            updateAddressHidden();
         });
 
         zillaSelect.addEventListener('change', function () {
-            const selectedDist = this.value;
-            // Reset upazila
+            const selDist = this.value;
             upazilaSelect.innerHTML = '<option value="">Select Upazila</option>';
             upazilaSelect.disabled = true;
 
-            if (selectedDist && geoUpazilasByDistrict[selectedDist]) {
-                geoUpazilasByDistrict[selectedDist].forEach(up => {
+            if (selDist && geoUpazilasByDistrict[selDist]) {
+                geoUpazilasByDistrict[selDist].forEach(up => {
                     const opt = document.createElement('option');
                     opt.value = up;
                     opt.textContent = up;
