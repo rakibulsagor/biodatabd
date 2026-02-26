@@ -519,13 +519,17 @@ document.addEventListener('DOMContentLoaded', () => {
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(opt).from(element).save().then(() => {
-            // Restore original styles
-            appContainer.setAttribute('style', origContainer);
-            previewSection.setAttribute('style', origPreview);
-            stickyContainer.setAttribute('style', origSticky);
-            element.setAttribute('style', origElement);
-        });
+        // Wait 150ms for the browser to reflow the expanded layout
+        // before html2canvas captures the element
+        setTimeout(() => {
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore original styles
+                appContainer.setAttribute('style', origContainer);
+                previewSection.setAttribute('style', origPreview);
+                stickyContainer.setAttribute('style', origSticky);
+                element.setAttribute('style', origElement);
+            });
+        }, 150);
     });
 
     // Feedback Form Submission Limiter via LocalStorage
