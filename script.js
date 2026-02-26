@@ -235,21 +235,72 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial render
     renderAll();
 
-    // Photo Upload Logic
+    // Photo Upload and Crop Logic
     const photoUpload = document.getElementById('photoUpload');
     const photoPreview = document.getElementById('biodata-photo');
+    const cropperModal = document.getElementById('cropper-modal');
+    const cropperImage = document.getElementById('cropper-image');
+    const cropCancelBtn = document.getElementById('crop-cancel-btn');
+    const cropApplyBtn = document.getElementById('crop-apply-btn');
+    let cropper;
 
-    photoUpload.addEventListener('change', function () {
-        if (this.files && this.files[0]) {
+    photoUpload.addEventListener('change', function (e) {
+        const files = e.target.files;
+        if (files && files.length > 0) {
             const reader = new FileReader();
-            reader.onload = function (e) {
-                photoPreview.src = e.target.result;
-                photoPreview.style.display = 'inline-block';
-            }
-            reader.readAsDataURL(this.files[0]);
-        } else {
-            photoPreview.style.display = 'none';
+            reader.onload = function (event) {
+                cropperImage.src = event.target.result;
+                cropperModal.style.display = 'flex';
+
+                // Destroy old cropper instance if exists
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                // Initialize Cropper
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1, // 1:1 square crop
+                    viewMode: 1,    // Restrict crop box to canvas
+                    dragMode: 'move', // Allow panning the image
+                    autoCropArea: 0.8,
+                    guides: true,
+                    center: true,
+                });
+            };
+            reader.readAsDataURL(files[0]);
         }
+    });
+
+    // Cancel Cropping
+    cropCancelBtn.addEventListener('click', () => {
+        cropperModal.style.display = 'none';
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+        photoUpload.value = ''; // Clean input
+    });
+
+    // Apply Crop
+    cropApplyBtn.addEventListener('click', () => {
+        if (!cropper) return;
+
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        // Set preview image source to cropped data URL
+        photoPreview.src = canvas.toDataURL('image/jpeg', 0.9);
+        photoPreview.style.display = 'inline-block';
+
+        // Close modal and cleanup
+        cropperModal.style.display = 'none';
+        cropper.destroy();
+        cropper = null;
     });
 
     // Add Dynamic Education Buttons
