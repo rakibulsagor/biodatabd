@@ -48,6 +48,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Height Dropdown Logic
+    const heightFt = document.getElementById('height-ft');
+    const heightIn = document.getElementById('height-in');
+    const heightHidden = document.getElementById('height');
+
+    function updateHeightHidden() {
+        if (heightFt && heightIn && heightHidden) {
+            if (heightFt.value && heightIn.value) {
+                heightHidden.value = heightFt.value + ' ' + heightIn.value;
+            } else if (heightFt.value) {
+                heightHidden.value = heightFt.value;
+            } else {
+                heightHidden.value = '';
+            }
+            // Trigger input event to update the bio-preview array
+            heightHidden.dispatchEvent(new Event('input'));
+        }
+    }
+
+    if (heightFt && heightIn && heightHidden) {
+        heightFt.addEventListener('change', updateHeightHidden);
+        heightIn.addEventListener('change', updateHeightHidden);
+    }
+
     // Load Address Suggestions into Datalist from geo-data.js
     const addressDataList = document.getElementById('address-suggestions');
     if (addressDataList && typeof geoPlaces !== 'undefined') {

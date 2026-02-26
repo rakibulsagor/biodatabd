@@ -92,8 +92,32 @@
                         <input type="text" id="age" placeholder="26">
                     </div>
                     <div class="input-field">
-                        <label for="height">Height / উচ্চতা</label>
-                        <input type="text" id="height" placeholder="5'8&quot;">
+                        <label>Height / উচ্চতা</label>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <select id="height-ft" style="flex: 1;">
+                                <option value="">Feet / ফুট</option>
+                                <option value="4'">4'</option>
+                                <option value="5'">5'</option>
+                                <option value="6'">6'</option>
+                                <option value="7'">7'</option>
+                            </select>
+                            <select id="height-in" style="flex: 1;">
+                                <option value="">Inches / ইঞ্চি</option>
+                                <option value='0"'>0"</option>
+                                <option value='1"'>1"</option>
+                                <option value='2"'>2"</option>
+                                <option value='3"'>3"</option>
+                                <option value='4"'>4"</option>
+                                <option value='5"'>5"</option>
+                                <option value='6"'>6"</option>
+                                <option value='7"'>7"</option>
+                                <option value='8"'>8"</option>
+                                <option value='9"'>9"</option>
+                                <option value='10"'>10"</option>
+                                <option value='11"'>11"</option>
+                            </select>
+                        </div>
+                        <input type="hidden" id="height" value="">
                     </div>
                     <div class="input-field">
                         <label for="bloodGroup">Blood Group / রক্তের গ্রুপ</label>
