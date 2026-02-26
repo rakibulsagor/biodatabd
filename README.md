@@ -1,5 +1,5 @@
-![original-image(1)](https://github.com/user-attachments/assets/cb4cb7ab-0c84-4b5a-b861-58ec76631de2)<div align="center">
-  <img align src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
+<div align="center">
+  <img align="center" src="https://raw.githubusercontent.com/rakibulsagor/biodatabd/main/biodata%20page%20image/template/weblogo.svg" alt="Biodata BD Logo" width="120" />
   <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
   <circle cx="100" cy="100" r="85" stroke="#2D89C7" stroke-width="4"/>
   <circle cx="100" cy="100" r="75" stroke="#8DC63F" stroke-width="4"/>
