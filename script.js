@@ -495,19 +495,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const element = document.getElementById('biodata-document');
 
+        // Clone the element and render it off-screen at full A4 width
+        // so the 2-column grid layout doesn't constrain the captured width.
+        const clone = element.cloneNode(true);
+        clone.style.cssText = [
+            'position: fixed',
+            'top: -99999px',
+            'left: -99999px',
+            'width: 794px',
+            'max-width: 794px',
+            'min-height: auto',
+            'margin: 0',
+            'padding: 20px',
+            'box-shadow: none',
+            'overflow: visible',
+            'background: #fff'
+        ].join(';');
+        document.body.appendChild(clone);
+
         const opt = {
-            margin: [0.6, 0.6, 0.6, 0.6],
+            margin: [0.5, 0.5, 0.5, 0.5],
             filename: 'Wedding_Biodata.pdf',
             image: { type: 'jpeg', quality: 0.98 },
-            html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: element.scrollWidth },
-            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
-            pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+            html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
-        element.classList.add('generating-pdf');
-
-        html2pdf().set(opt).from(element).save().then(() => {
-            element.classList.remove('generating-pdf');
+        html2pdf().set(opt).from(clone).save().then(() => {
+            document.body.removeChild(clone);
         });
     });
 
