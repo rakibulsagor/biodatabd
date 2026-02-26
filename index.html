@@ -89,7 +89,7 @@
                     </div>
                     <div class="input-field">
                         <label for="age">Age / বয়স</label>
-                        <input type="text" id="age" placeholder="26">
+                        <input type="text" id="age" class="num-only" placeholder="26">
                     </div>
                     <div class="input-field">
                         <label>Height / উচ্চতা</label>
@@ -197,7 +197,7 @@
                     </div>
                     <div class="input-field">
                         <label for="familyMembers">Total Members / পরিবারের সদস্য সংখ্যা</label>
-                        <input type="text" id="familyMembers" placeholder="5">
+                        <input type="text" id="familyMembers" class="num-only" placeholder="5">
                     </div>
                 </div>
 
@@ -259,9 +259,35 @@
                 <div class="form-group-title">Address & Grandparents (ঠিকানা ও বংশ)</div>
                 <div id="grandparents-container">
                     <div class="input-grid gp-item">
-                        <div class="input-field span-full">
-                            <label for="presentAddress">Present Address / বর্তমান ঠিকানা</label>
-                            <input type="text" id="presentAddress" placeholder="Gulshan, Dhaka">
+                        <div class="input-field span-full"
+                            style="border-top: 1px dotted var(--primary-light); padding-top: 1rem;">
+                            <label>Present Address / বর্তমান ঠিকানা</label>
+                            <label style="font-size: 0.8rem; font-weight: normal; margin-top:0.5rem;"
+                                for="country">Country / দেশ</label>
+                            <input type="text" id="country" value="Bangladesh" disabled>
+                            <input type="hidden" id="presentAddress">
+                        </div>
+                        <div class="input-field">
+                            <label for="presentZilla">Zilla / জেলা</label>
+                            <select id="presentZilla">
+                                <option value="">Select Zilla</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label for="presentUpazila">Upazila / উপজেলা</label>
+                            <select id="presentUpazila" disabled>
+                                <option value="">Select Upazila</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label for="presentUnion">Village/Union / গ্রাম/ইউনিয়ন</label>
+                            <select id="presentUnion" disabled>
+                                <option value="">Select Village/Union</option>
+                            </select>
+                        </div>
+                        <div class="input-field">
+                            <label for="presentPostcode">Postal Code / পোস্টাল কোড</label>
+                            <input type="text" id="presentPostcode" class="num-only" placeholder="1212" maxlength="4">
                         </div>
                         <div class="input-field">
                             <label>Dadar Bari (Paternal) / দাদার বাড়ি</label>
