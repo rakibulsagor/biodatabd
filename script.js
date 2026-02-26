@@ -494,24 +494,22 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const element = document.getElementById('biodata-document');
+        const appContainer = document.querySelector('.app-container');
+        const previewSection = document.querySelector('.preview-section');
+        const stickyContainer = document.querySelector('.sticky-container');
 
-        // Clone the element and render it off-screen at full A4 width
-        // so the 2-column grid layout doesn't constrain the captured width.
-        const clone = element.cloneNode(true);
-        clone.style.cssText = [
-            'position: fixed',
-            'top: -99999px',
-            'left: -99999px',
-            'width: 794px',
-            'max-width: 794px',
-            'min-height: auto',
-            'margin: 0',
-            'padding: 20px',
-            'box-shadow: none',
-            'overflow: visible',
-            'background: #fff'
-        ].join(';');
-        document.body.appendChild(clone);
+        // Save original inline styles so we can restore them after capture
+        const origContainer = appContainer.getAttribute('style') || '';
+        const origPreview = previewSection.getAttribute('style') || '';
+        const origSticky = stickyContainer.getAttribute('style') || '';
+        const origElement = element.getAttribute('style') || '';
+
+        // Temporarily make the biodata element full A4-width so html2canvas
+        // captures at the correct size (not the narrow 2-column grid width)
+        appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
+        previewSection.style.cssText = 'width:100%;';
+        stickyContainer.style.cssText = 'position:static;';
+        element.style.cssText = 'width:794px;max-width:794px;margin:0 auto;box-shadow:none;overflow:visible;';
 
         const opt = {
             margin: [0.5, 0.5, 0.5, 0.5],
@@ -521,8 +519,12 @@ document.addEventListener('DOMContentLoaded', () => {
             jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
         };
 
-        html2pdf().set(opt).from(clone).save().then(() => {
-            document.body.removeChild(clone);
+        html2pdf().set(opt).from(element).save().then(() => {
+            // Restore original styles
+            appContainer.setAttribute('style', origContainer);
+            previewSection.setAttribute('style', origPreview);
+            stickyContainer.setAttribute('style', origSticky);
+            element.setAttribute('style', origElement);
         });
     });
 
