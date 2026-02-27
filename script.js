@@ -153,30 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
         upazilaSelect.addEventListener('change', updateAddressHidden);
     }
 
-    // Religion Logo Logic
-    const religionSelect = document.getElementById('religion');
-    const religionLogo = document.getElementById('religion-logo');
-    const bismillahText = document.querySelector('.bismillah');
-    if (religionSelect) {
-        religionSelect.addEventListener('change', function () {
-            const val = this.value;
-            if (val === 'Islam') {
-                religionLogo.style.display = 'none';
-                if (bismillahText) bismillahText.style.display = 'block';
-            } else if (val === 'Hindu') {
-                religionLogo.src = 'biodata page image/hindu/vecteezy_flower-mandala-with-om-hindu-symbol_12742089.jpg';
-                religionLogo.style.display = 'inline-block';
-                if (bismillahText) bismillahText.style.display = 'none';
-            } else if (val === 'Christian') {
-                religionLogo.src = 'biodata page image/christan/vecteezy_religious-cross-with-shine_75640922.jpg';
-                religionLogo.style.display = 'inline-block';
-                if (bismillahText) bismillahText.style.display = 'none';
-            } else {
-                religionLogo.style.display = 'none';
-                if (bismillahText) bismillahText.style.display = 'none';
-            }
-        });
-    }
+
 
     // Render static schema items
     function renderStaticSection(sectionKey, tableId) {
@@ -559,7 +536,6 @@ document.addEventListener('DOMContentLoaded', () => {
             await new Promise(r => setTimeout(r, 200));
 
             // ── Section visibility helpers ──
-            const bioHeader = element.querySelector('.bio-header');
             const ornaments = element.querySelectorAll('.ornament');
             const watermarkEl = element.querySelector('.watermark');
             const allSections = [...element.querySelectorAll('.bio-section')];
@@ -568,7 +544,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const page2Ids = ['section-education', 'section-family-members', 'section-contact'];
 
             function showOnly(sectionIds, showHeader) {
-                if (bioHeader) bioHeader.style.display = showHeader ? '' : 'none';
                 if (watermarkEl) watermarkEl.style.display = 'none';
                 ornaments.forEach(o => o.style.display = 'none');
                 allSections.forEach(s => {
@@ -578,7 +553,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             function restoreSections() {
-                if (bioHeader) bioHeader.style.display = '';
                 if (watermarkEl) watermarkEl.style.display = '';
                 ornaments.forEach(o => o.style.display = '');
                 allSections.forEach(s => s.style.display = '');
