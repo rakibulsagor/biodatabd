@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const allSections = [...element.querySelectorAll('.bio-section')];
 
             const page1Ids = ['section-personal', 'section-family'];
-            const page2Ids = ['section-education', 'section-family-members', 'section-contact'];
+            const page2Ids = ['section-education', 'section-family-members', 'section-contact', 'section-origin', 'section-about'];
 
             function showOnly(sectionIds, showHeader) {
                 if (watermarkEl) watermarkEl.style.display = 'none';
@@ -579,7 +579,7 @@ document.addEventListener('DOMContentLoaded', () => {
             await new Promise(r => setTimeout(r, 60));
             const canvas1 = await html2canvas(element, captureOpts);
 
-            // ── Capture Page 2: education + extended family + contact ──
+            // ── Capture Page 2: education + extended family + addresses + about ──
             const visiblePage2 = page2Ids.filter(id => {
                 const s = document.getElementById(id);
                 return s && !s.classList.contains('hidden-section');
@@ -598,6 +598,22 @@ document.addEventListener('DOMContentLoaded', () => {
             const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
             const logoSvg = document.querySelector('.logo-wrapper svg');
             const logoDataUrl = logoSvg ? await svgToBase64(logoSvg, 80) : null;
+
+            // Load QR Code
+            let qrCodeDataUrl = null;
+            try {
+                const qrResp = await fetch('images/qrcode.png');
+                if (qrResp.ok) {
+                    const qrBlob = await qrResp.blob();
+                    qrCodeDataUrl = await new Promise(resolve => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.readAsDataURL(qrBlob);
+                    });
+                }
+            } catch (e) {
+                console.error('Failed to load QR code:', e);
+            }
 
             // ── PDF constants ──
             const A4_W = 210, A4_H = 297;
@@ -646,59 +662,6 @@ document.addEventListener('DOMContentLoaded', () => {
             element.setAttribute('style', origEl);
             if (docBorder) docBorder.setAttribute('style', origBorder);
         }
-
-        // ── Load assets ──
-        const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
-        const logoSvg = document.querySelector('.logo-wrapper svg');
-        const logoDataUrl = logoSvg ? await svgToBase64(logoSvg, 80) : null;
-
-        // Load QR Code
-        let qrCodeDataUrl = null;
-        try {
-            const qrResp = await fetch('images/qrcode.png');
-            const qrBlob = await qrResp.blob();
-            qrCodeDataUrl = await new Promise(resolve => {
-                const reader = new FileReader();
-                reader.onloadend = () => resolve(reader.result);
-                reader.readAsDataURL(qrBlob);
-            });
-        } catch (e) {
-            console.error('Failed to load QR code:', e);
-        }
-
-        // ── PDF constants ──
-        const A4_W = 210, A4_H = 297;
-        const MARGIN = 15;
-        const contentW = A4_W - 2 * MARGIN;   // 180 mm
-
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
-
-        function addPageContent(canvas) {
-            const canvasW = canvas.width;
-            const mmPerPx = contentW / canvasW;
-            const contentH = (canvas.height * mmPerPx);
-
-            // Template background
-            pdf.addImage(templateDataUrl, 'JPEG', 0, 0, A4_W, A4_H);
-
-            // Biodata content
-            pdf.addImage(canvas.toDataURL('image/png'), 'PNG', MARGIN, MARGIN, contentW, contentH);
-
-            // ── Watermark: site URL ──
-            pdf.setFontSize(8);
-            pdf.setTextColor(100, 100, 100);
-            pdf.text('Created via biodatabd.vercel.app', A4_W / 2, A4_H - 9, { align: 'center' });
-            pdf.link(A4_W / 2 - 20, A4_H - 12, 40, 5, { url: 'https://biodatabd.vercel.app' });
-        }
-
-        addPageContent(canvas1);
-        if (canvas2) {
-            pdf.addPage();
-            addPageContent(canvas2);
-        }
-
-        pdf.save('Wedding_Biodata.pdf');
     }
 
     async function handleDownload(type, btn) {
