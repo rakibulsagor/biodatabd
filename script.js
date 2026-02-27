@@ -604,14 +604,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Biodata content
                 pdf.addImage(canvas.toDataURL('image/png'), 'PNG', MARGIN, MARGIN, contentW, contentH);
 
-                // ── Watermark: logo + site URL ──
-                if (logoDataUrl) {
-                    const logoMm = 7;
-                    pdf.addImage(logoDataUrl, 'PNG', A4_W / 2 - logoMm / 2 - 22, A4_H - 13, logoMm, logoMm);
-                }
+                // ── Watermark: site URL ──
                 pdf.setFontSize(8);
                 pdf.setTextColor(100, 100, 100);
-                pdf.text('Created via biodatabd.vercel.app', A4_W / 2 + (logoDataUrl ? 2 : 0), A4_H - 9, { align: 'left' });
+                pdf.text('Created via biodatabd.vercel.app', A4_W / 2, A4_H - 9, { align: 'center' });
+                pdf.link(A4_W / 2 - 25, A4_H - 12, 50, 5, { url: 'https://biodatabd.vercel.app' });
+
+                // ── QR Code: Bottom Right ──
+                if (qrCodeDataUrl) {
+                    const qrSize = 15;
+                    pdf.addImage(qrCodeDataUrl, 'PNG', A4_W - MARGIN - qrSize, A4_H - MARGIN - qrSize + 5, qrSize, qrSize);
+                }
             }
 
             addPageContent(canvas1);
@@ -634,6 +637,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const templateDataUrl = await pdfPageToBase64('biodata page image/template.pdf');
         const logoSvg = document.querySelector('.logo-wrapper svg');
         const logoDataUrl = logoSvg ? await svgToBase64(logoSvg, 80) : null;
+
+        // Load QR Code
+        let qrCodeDataUrl = null;
+        try {
+            const qrResp = await fetch('images/qrcode.png');
+            const qrBlob = await qrResp.blob();
+            qrCodeDataUrl = await new Promise(resolve => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.readAsDataURL(qrBlob);
+            });
+        } catch (e) {
+            console.error('Failed to load QR code:', e);
+        }
 
         // ── PDF constants ──
         const A4_W = 210, A4_H = 297;
@@ -713,11 +730,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const origBorder = docBorder ? (docBorder.getAttribute('style') || '') : '';
 
         try {
-            // Expand layout for capture
+            // Expand layout for capture (FIX: Only modify preview-inner elements, not the whole site)
             const CAPTURE_W = 794;
-            appContainer.style.cssText = 'display:block;max-width:100%;padding:0;';
-            previewSec.style.cssText = 'width:100%;';
-            stickyCont.style.cssText = 'position:static;';
+            // appContainer.style.cssText = 'display:block;max-width:100%;padding:0;'; // REMOVED to fix sprawl
+            // previewSec.style.cssText = 'width:100%;'; // REMOVED to fix sprawl
+            stickyCont.style.cssText = 'position:static; width:100%; display:flex; justify-content:center;';
             element.style.cssText = `width:${CAPTURE_W}px;max-width:${CAPTURE_W}px;margin:0 auto;`
                 + 'box-shadow:none;overflow:visible;min-height:unset;';
 
