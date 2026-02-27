@@ -137,6 +137,83 @@ body {
     box-shadow: 0 6px 12px rgba(123, 13, 30, 0.2);
 }
 
+/* Consolidated Download Dropdown Styles */
+.download-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown-toggle::after {
+    content: '▼';
+    font-size: 0.8rem;
+    transition: transform 0.3s;
+}
+
+.download-dropdown:hover .dropdown-toggle::after {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: var(--bg-white);
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1001;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--accent-gold-light);
+    margin-top: 5px;
+    animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.download-dropdown:hover .dropdown-menu,
+.download-dropdown.active .dropdown-menu {
+    display: block;
+}
+
+.dropdown-item {
+    color: var(--primary-dark);
+    padding: 12px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background 0.2s;
+    cursor: pointer;
+    font-family: var(--font-sans);
+    font-weight: 500;
+}
+
+.dropdown-item:hover {
+    background-color: var(--bg-light);
+    color: var(--primary-maroon);
+}
+
+.dropdown-item i {
+    font-size: 1.1rem;
+}
+
 .secondary-btn {
     background: transparent;
     color: var(--primary-maroon);

@@ -757,8 +757,32 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    downloadBtn.addEventListener('click', () => handleDownload('pdf'));
-    downloadPngBtn.addEventListener('click', () => handleDownload('png'));
+    // --- Consolidated Download Event Listeners ---
+    const downloadPdfTop = document.getElementById('download-pdf-top');
+    const downloadPngTop = document.getElementById('download-png-top');
+    const downloadPdfBottom = document.getElementById('download-pdf-bottom');
+    const downloadPngBottom = document.getElementById('download-png-bottom');
+    const downloadToggleTop = document.getElementById('download-toggle-top');
+    const downloadToggleBottom = document.getElementById('download-toggle-bottom');
+
+    if (downloadPdfTop) downloadPdfTop.addEventListener('click', () => handleDownload('pdf', downloadToggleTop));
+    if (downloadPngTop) downloadPngTop.addEventListener('click', () => handleDownload('png', downloadToggleTop));
+    if (downloadPdfBottom) downloadPdfBottom.addEventListener('click', () => handleDownload('pdf', downloadToggleBottom));
+    if (downloadPngBottom) downloadPngBottom.addEventListener('click', () => handleDownload('png', downloadToggleBottom));
+
+    // Close dropdowns when clicking outside
+    window.addEventListener('click', (e) => {
+        if (!e.target.matches('.dropdown-toggle')) {
+            const dropdowns = document.getElementsByClassName('dropdown-menu');
+            for (let i = 0; i < dropdowns.length; i++) {
+                const openDropdown = dropdowns[i];
+                if (openDropdown.parentElement.contains(e.target)) continue;
+                // Since we use :hover in CSS, we don't necessarily need JS to close it
+                // but we can add an 'active' class if we want manual toggle-only behavior.
+                // For now, :hover is enough, but this is here for extensibility.
+            }
+        }
+    });
 
     // Feedback Form Submission Limiter via LocalStorage
     const feedbackForm = document.getElementById('web3-feedback-form');

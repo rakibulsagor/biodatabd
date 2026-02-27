@@ -95,9 +95,13 @@
         <section class="form-section">
             <div class="form-header">
                 <h2>Enter Details</h2>
-                <button id="download-btn-top" class="primary-btn">Download PDF</button>
-                <button id="download-png-btn" class="primary-btn" style="background-color: #27ae60;">Download
-                    PNG</button>
+                <div class="download-dropdown">
+                    <button id="download-toggle-top" class="primary-btn dropdown-toggle">Download</button>
+                    <div class="dropdown-menu">
+                        <div class="dropdown-item" id="download-pdf-top">📄 Download PDF</div>
+                        <div class="dropdown-item" id="download-png-top">🖼️ Download PNG</div>
+                    </div>
+                </div>
             </div>
 
             <form id="biodata-form">
@@ -355,6 +359,18 @@
                 </div>
                 <button type="button" id="add-gp-btn" class="secondary-btn margin-top">+ Add Grandparent
                     Details</button>
+
+                <div class="form-actions-bottom"
+                    style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--bg-light); display: flex; justify-content: center;">
+                    <div class="download-dropdown">
+                        <button id="download-toggle-bottom" class="primary-btn dropdown-toggle">Download
+                            Bio-Data</button>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-item" id="download-pdf-bottom">📄 Download PDF</div>
+                            <div class="dropdown-item" id="download-png-bottom">🖼️ Download PNG</div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </section>
 
