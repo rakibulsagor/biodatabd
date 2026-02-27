@@ -673,11 +673,7 @@ document.addEventListener('DOMContentLoaded', () => {
         pdf.save('Wedding_Biodata.pdf');
     }
 
-    const downloadBtn = document.getElementById('download-btn-top');
-    const downloadPngBtn = document.getElementById('download-png-btn');
-
-    async function handleDownload(type) {
-        const btn = type === 'pdf' ? downloadBtn : downloadPngBtn;
+    async function handleDownload(type, btn) {
         const genderInput = document.getElementById('gender');
 
         if (!genderInput.value) {
