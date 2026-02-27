@@ -166,15 +166,28 @@ body {
     display: none;
     position: absolute;
     right: 0;
-    top: calc(100% + 10px);
+    top: calc(100% + 5px);
+    /* Reduced gap */
     background-color: var(--bg-white);
     min-width: 200px;
     box-shadow: 0 15px 35px rgba(74, 4, 14, 0.15);
     z-index: 1001;
     border-radius: 12px;
-    overflow: hidden;
+    overflow: visible;
+    /* Changed from hidden to allow pseudo-element bridge */
     border: 1px solid var(--accent-gold);
     animation: fadeInUp 0.3s ease-out;
+}
+
+/* Invisible bridge to keep menu open while moving cursor */
+.dropdown-menu::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: transparent;
 }
 
 @keyframes fadeInUp {
