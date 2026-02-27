@@ -130,6 +130,10 @@
                         </select>
                     </div>
                     <div class="input-field">
+                        <label for="birthPlace">Place of Birth / জন্মস্থান</label>
+                        <input type="text" id="birthPlace" placeholder="E.g. Dhaka">
+                    </div>
+                    <div class="input-field">
                         <label for="religion">Religion / ধর্ম</label>
                         <select id="religion">
                             <option value="">Select / নির্বাচন করুন</option>
@@ -138,6 +142,18 @@
                             <option value="Christian">Christian / খ্রিস্টান ধর্ম</option>
                             <option value="Other">Other / অন্যান্য</option>
                         </select>
+                    </div>
+                    <div class="input-field">
+                        <label for="sect">Sect / মাজহাব</label>
+                        <input type="text" id="sect" placeholder="E.g. Sunni / সুন্নী">
+                    </div>
+                    <div class="input-field">
+                        <label for="job">Occupation / পেশা</label>
+                        <input type="text" id="job" placeholder="E.g. Software Engineer / সফটওয়্যার ইঞ্জিনিয়ার">
+                    </div>
+                    <div class="input-field">
+                        <label for="employer">Employer / প্রতিষ্ঠান</label>
+                        <input type="text" id="employer" placeholder="E.g. Google">
                     </div>
                     <div class="input-field">
                         <label for="age">Age / বয়স</label>
@@ -195,19 +211,6 @@
                         </select>
                     </div>
                     <div class="input-field">
-                        <label for="job">Occupation / পেশা</label>
-                        <input type="text" id="job" list="job-suggestions" placeholder="E.g. Software Engineer">
-                        <datalist id="job-suggestions">
-                            <option value="Software Engineer / সফটওয়্যার ইঞ্জিনিয়ার">
-                            <option value="Doctor / ডাক্তার">
-                            <option value="Teacher / শিক্ষক">
-                            <option value="Businessman / ব্যবসায়ী">
-                            <option value="Govt Employee / সরকারি চাকরিজীবী">
-                            <option value="Private Job / বেসরকারি চাকরি">
-                            <option value="Student / ছাত্র">
-                        </datalist>
-                    </div>
-                    <div class="input-field">
                         <label for="salary">Monthly Income / মাসিক আয়</label>
                         <input type="text" id="salary" class="income-input" placeholder="E.g. 50000">
                     </div>
@@ -240,16 +243,32 @@
                         <input type="text" id="motherName" class="alpha-only" placeholder="">
                     </div>
                     <div class="input-field">
-                        <label for="motherWork">Mother's Work / মাতার পেশা</label>
-                        <input type="text" id="motherWork" list="parent-work-suggestions" placeholder="Homemaker">
+                        <label for="motherWork">Mother's Job / মাতার পেশা</label>
+                        <input type="text" id="motherWork" placeholder="E.g. Homemaker / গৃহিণী">
                     </div>
                     <div class="input-field">
-                        <label for="parentsIncome">Parents' Monthly Income / পিতা-মাতার মাসিক আয়</label>
-                        <input type="text" id="parentsIncome" class="income-input" placeholder="E.g. 100000">
+                        <label for="familyType">Family Type / পরিবার</label>
+                        <select id="familyType">
+                            <option value="">Select / নির্বাচন করুন</option>
+                            <option value="Joint">Joint / যৌথ পরিবার</option>
+                            <option value="Nuclear">Nuclear / একক পরিবার</option>
+                        </select>
                     </div>
                     <div class="input-field">
-                        <label for="familyMembers">Total Members / পরিবারের সদস্য সংখ্যা</label>
+                        <label for="parentsIncome">Parents' Income / পিতা-মাতার আয়</label>
+                        <input type="text" id="parentsIncome" class="income-input" placeholder="E.g. 50,000">
+                    </div>
+                    <div class="input-field">
+                        <label for="familyMembers">Total Members / সদস্য সংখ্যা</label>
                         <input type="text" id="familyMembers" class="num-only" placeholder="5">
+                    </div>
+                    <div class="input-field">
+                        <label for="brothers">Brother(s) / ভাই</label>
+                        <input type="text" id="brothers" placeholder="E.g. 1 Brother (Engineer)">
+                    </div>
+                    <div class="input-field">
+                        <label for="sisters">Sister(s) / বোন</label>
+                        <input type="text" id="sisters" placeholder="E.g. 2 Sisters (Married)">
                     </div>
                 </div>
 
@@ -345,6 +364,18 @@
                             <label for="presentPostcode">Postal Code / পোস্টাল কোড</label>
                             <input type="text" id="presentPostcode" class="num-only" placeholder="1212" maxlength="4">
                         </div>
+                        <div class="input-field span-full">
+                            <label for="permanentAddress">Permanent Address / স্থায়ী ঠিকানা</label>
+                            <input type="text" id="permanentAddress" placeholder="E.g. Village, P.O, P.S, Dist.">
+                        </div>
+                        <div class="input-field">
+                            <label for="phone">Phone / ফোন</label>
+                            <input type="text" id="phone" placeholder="E.g. 01700000000">
+                        </div>
+                        <div class="input-field">
+                            <label for="email">Email / ইমেইল</label>
+                            <input type="email" id="email" placeholder="E.g. yourname@example.com">
+                        </div>
                         <div class="input-field">
                             <label>Dadar Bari (Paternal) / দাদার বাড়ি</label>
                             <input type="text" class="dyn-gp-input" data-gp-label="Dadar Bari / দাদার বাড়ি"
@@ -359,6 +390,20 @@
                 </div>
                 <button type="button" id="add-gp-btn" class="secondary-btn margin-top">+ Add Grandparent
                     Details</button>
+
+                <!-- About & Expectations -->
+                <div class="form-group-title">About & Preferences (শখ ও প্রত্যাশা)</div>
+                <div class="input-grid">
+                    <div class="input-field span-full">
+                        <label for="hobbies">Hobbies and Interests / শখ ও রুচি</label>
+                        <textarea id="hobbies" rows="3" placeholder="E.g. Reading, Traveling, Gardening"></textarea>
+                    </div>
+                    <div class="input-field span-full">
+                        <label for="expectations">Partner Expectations / জীবনসঙ্গী যেমন চাই</label>
+                        <textarea id="expectations" rows="3"
+                            placeholder="E.g. Religious, Honest, Respectful"></textarea>
+                    </div>
+                </div>
 
                 <div class="form-actions-bottom"
                     style="margin-top: 2rem; padding-top: 1rem; border-top: 2px solid var(--bg-light); display: flex; justify-content: center;">
@@ -395,17 +440,20 @@
                             <!-- Personal Section -->
                             <div class="bio-section" id="section-personal">
                                 <h4 class="section-title">Personal Details <span class="bn">ব্যক্তিগত তথ্য</span></h4>
-                                <table class="bio-table" id="table-personal">
-                                    <!-- Dynamic rows inside -->
-                                </table>
+                                <table class="bio-table" id="table-personal"></table>
                             </div>
 
                             <!-- Family Section -->
                             <div class="bio-section" id="section-family">
                                 <h4 class="section-title">Family Details <span class="bn">পারিবারিক অবস্থা</span></h4>
-                                <table class="bio-table" id="table-family">
-                                    <!-- Dynamic rows inside -->
-                                </table>
+                                <table class="bio-table" id="table-family"></table>
+                            </div>
+
+                            <!-- Family Structure (Siblings/Grandparents) Section -->
+                            <div class="bio-section" id="section-family-members">
+                                <h4 class="section-title">Family Details (Extended) <span class="bn">পরিজনের
+                                        বিবরণ</span></h4>
+                                <table class="bio-table" id="table-family-members"></table>
                             </div>
 
                             <!-- Education Section -->
@@ -423,29 +471,30 @@
                                             </th>
                                         </tr>
                                     </thead>
-                                    <tbody id="table-education-body">
-                                        <!-- Dynamic rows inside -->
-                                    </tbody>
+                                    <tbody id="table-education-body"></tbody>
                                 </table>
                             </div>
 
-                            <!-- Family Structure (Siblings/Grandparents) Section -->
-                            <div class="bio-section" id="section-family-members">
-                                <h4 class="section-title">Family Details (Extended) <span class="bn">পরিজনের
-                                        বিবরণ</span></h4>
-                                <table class="bio-table" id="table-family-members">
-                                    <!-- Dynamic rows inside -->
-                                </table>
-                            </div>
-
-                            <!-- Present Address Section -->
-                            <div class="bio-section" id="section-contact">
-                                <h4 class="section-title">Contact & Regional <span class="bn">যোগাযোগ ও ঠিকানা</span>
+                            <!-- Origin Section -->
+                            <div class="bio-section" id="section-origin">
+                                <h4 class="section-title">Address & Grandparents <span class="bn">ঠিকানা ও বংশ</span>
                                 </h4>
-                                <table class="bio-table" id="table-contact">
-                                    <!-- Dynamic rows inside -->
-                                </table>
+                                <table class="bio-table" id="table-origin"></table>
                             </div>
+
+                            <!-- Contact Section -->
+                            <div class="bio-section" id="section-contact">
+                                <h4 class="section-title">Contact Information <span class="bn">যোগাযোগ</span></h4>
+                                <table class="bio-table" id="table-contact"></table>
+                            </div>
+
+                            <!-- About & Preferences Section -->
+                            <div class="bio-section" id="section-about">
+                                <h4 class="section-title">About & Preferences <span class="bn">শখ ও প্রত্যাশা</span>
+                                </h4>
+                                <table class="bio-table" id="table-about"></table>
+                            </div>
+
 
                         </div>
 

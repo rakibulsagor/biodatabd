@@ -5,24 +5,37 @@ document.addEventListener('DOMContentLoaded', () => {
         personal: [
             { id: 'fullName', label: 'Name / নাম' },
             { id: 'gender', label: 'Gender / লিঙ্গ' },
+            { id: 'birthPlace', label: 'Place of Birth / জন্মস্থান' },
             { id: 'religion', label: 'Religion / ধর্ম' },
+            { id: 'sect', label: 'Sect / মাজহাব' },
             { id: 'age', label: 'Age / বয়স' },
             { id: 'height', label: 'Height / উচ্চতা' },
             { id: 'bloodGroup', label: 'Blood Group / রক্ত' },
             { id: 'job', label: 'Occupation / পেশা' },
+            { id: 'employer', label: 'Employer / প্রতিষ্ঠান' },
             { id: 'salary', label: 'Income / আয়' },
-            { id: 'maritalStatus', label: 'Marital Status / বৈবাহিক অবস্থা' }
+            { id: 'maritalStatus', label: 'Marital Status / বৈবৈাহিক অবস্থা' }
         ],
         family: [
             { id: 'fatherName', label: 'Father / পিতা' },
             { id: 'fatherWork', label: "Father's Job / পিতার পেশা" },
             { id: 'motherName', label: 'Mother / মাতা' },
             { id: 'motherWork', label: "Mother's Job / মাতার পেশা" },
+            { id: 'familyType', label: 'Family Type / পরিবার' },
             { id: 'parentsIncome', label: "Parents' Income / পিতা-মাতার আয়" },
-            { id: 'familyMembers', label: 'Total Members / সদস্য সংখ্যা' }
+            { id: 'familyMembers', label: 'Total Members / সদস্য সংখ্যা' },
+            { id: 'brothers', label: 'Brother(s) / ভাই' },
+            { id: 'sisters', label: 'Sister(s) / বোন' }
         ],
         contact: [
-            { id: 'presentAddress', label: 'Present Address / বর্তমান ঠিকানা' }
+            { id: 'presentAddress', label: 'Present Address / বর্তমান ঠিকানা' },
+            { id: 'permanentAddress', label: 'Permanent Address / স্থায়ী ঠিকানা' },
+            { id: 'phone', label: 'Phone / ফোন' },
+            { id: 'email', label: 'Email / ইমেইল' }
+        ],
+        about: [
+            { id: 'hobbies', label: 'Hobbies / শখ' },
+            { id: 'expectations', label: 'Expectations / প্রত্যাশা' }
         ]
     };
 
@@ -286,6 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderStaticSection('personal', 'table-personal');
         renderStaticSection('family', 'table-family');
         renderStaticSection('contact', 'table-contact');
+        renderStaticSection('about', 'table-about');
         renderEducationSection();
         renderOriginSection();
         renderFamilyMembersSection();
