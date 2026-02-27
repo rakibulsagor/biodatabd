@@ -654,14 +654,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Biodata content
             pdf.addImage(canvas.toDataURL('image/png'), 'PNG', MARGIN, MARGIN, contentW, contentH);
 
-            // ── Watermark: logo + site URL ──
-            if (logoDataUrl) {
-                const logoMm = 7;
-                pdf.addImage(logoDataUrl, 'PNG', A4_W / 2 - logoMm / 2 - 22, A4_H - 13, logoMm, logoMm);
-            }
+            // ── Watermark: site URL ──
             pdf.setFontSize(8);
             pdf.setTextColor(100, 100, 100);
-            pdf.text('Created via biodatabd.vercel.app', A4_W / 2 + (logoDataUrl ? 2 : 0), A4_H - 9, { align: 'left' });
+            pdf.text('Created via biodatabd.vercel.app', A4_W / 2, A4_H - 9, { align: 'center' });
+            pdf.link(A4_W / 2 - 20, A4_H - 12, 40, 5, { url: 'https://biodatabd.vercel.app' });
         }
 
         addPageContent(canvas1);
